@@ -1,0 +1,140 @@
+A list of Redis Commands:
+List with commands: https://redis.io/commands
+
+Basic Commands:
+
+1. Create an entry
+SET <Keyname> <Value>
+
+2. Get an entry
+GET <keyname>
+
+3. Check if a key exists
+EXISTS <keyname>
+
+4. Increase a value by 1 (only for numeric values)
+INCR <keyname>
+
+5. Delete a value (not the key)
+DEL <keyname>
+
+6. Increase a value by a chosen amount (only for numeric values)
+INCRBY <keyname> <amount>
+
+7. Decrease a value by 1 (only for numeric values)
+DECR <keyname>
+
+8. Decrease a value by a chosen amount (only for numeric values)
+DECRBY <keyname> <amount>
+
+	Nice to Know:
+
+	Not synchron for all clients!
+	x = GET <keyname>
+	x = x + 1
+	SET <keyname> x
+
+	Synchron for all clients:
+	INCR <keyname>
+
+9. Time to Life for a key
+EXPIRE <keyname> <time in seconds>
+
+10. Show the time to life
+TTL <keyname>
+
+11. Set a Key with a TTL
+SET <keyname> <value> EX <time in seconds>
+
+12. Stop TTL
+PERSISTS <keyname>
+
+	Nice to Know:
+
+	-2 -> key is expired
+	-1 -> key will never expire
+	Reasons for never expire:
+	- TTL resets with a new SET with the same key
+	- PERSIST on the key
+
+LISTS:
+
+13. Create a List
+RPUSH <keyname> <value> 	-> add a value to list
+RPUSH <keyname> <value> 	-> add a value to list end
+LPUSH <keyname> <value> 	-> add a value to list begin
+
+14: Get elements from the list
+LRANGE <keyname> <start> <end>
+Example:
+LRANGE example1 0 -1 	-> you will get all entries
+LRANGE example1 0 1 	-> you will get the first two entries
+LRANGE example1 1 2 	-> you will get the second and third entries
+
+15. Remove elements from a list
+LPOP <keyname> -> Removes the first entry and returns it
+RPOP <keyname> -> Removes the last entry and returns it
+
+16. Get the current length of a list
+LLEN <keyname>
+
+	Nice to Know:
+
+	Difference between a list and a set:
+	- list are ordered, set not
+	- set have only one of each value, no copies
+	- list has an fast access to data at the begin and the end. List ist ordered
+	- set could test the membership if the value already exists
+
+
+SETS:
+
+17. Add a member to a set
+SADD <keyname> <value> 		-> returns 1 if the member isnt already in the set and 0 if the value is already in the set
+
+18. Remove a member from a set
+SREM <keyname> <value> 		-> returns 1 if success and 0 if there was no value which fits with the given value
+
+19 Check if a member is in the set
+SISMEMBER <keyname> <value> 	-> returns 1 if member is in the set and 0 if there was no value which fits with the given value
+
+20. Get all members of a set
+SMEMBERS <keyname> 
+
+21. Combine two sets 
+SUNION <keyname1> <keyname2>
+
+22. Remove random members (because sets are not ordered)
+SPOP <keyname> <quantity to remove>
+
+
+SORTED SETS:
+
+23. Add a element to a sorted set
+ZADD <keyname> <score> <value> 		-> example for score: year, usernumber
+
+24. Get a list with the elements of a sorted list:
+ZRANGE <keyname> <start> <end>
+
+
+HASHES:
+
+25. Set up a hash in multiple steps
+HSET <keyname> <field1> <value>
+HSET <keyname> <field2> <value>
+HSET <keyname> <field3> <value>
+
+26. Get all information to the hash
+HGETALL <keyname>
+
+27. Set up in one step
+HMSET <keyname> <field1> <value> <field2> <value> <field3> <value>
+
+28. Get a single field value
+HGET <keyname> <field>
+
+29. Increase numeric values of hashes by chosen amount:
+HINCRBY <keyname> <field> <amount>
+
+30. Delete a field in a hash
+HDEL <keyname> <field>
