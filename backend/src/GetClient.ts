@@ -5,9 +5,9 @@ let clientInstance: RedisClientType | null = null;
 export async function getClient() {
   if (!clientInstance) {
     clientInstance = createClient();
-    clientInstance.on("error", (err) => console.log("Redis Client Error", err));
+    clientInstance.on("error", (err) => console.log("redis Client Error", err));
     await clientInstance.connect();
-    console.log("New Client created");
+    console.log("New redis Client created");
   }
   return clientInstance;
 }
