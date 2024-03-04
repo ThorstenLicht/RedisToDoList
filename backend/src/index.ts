@@ -6,6 +6,7 @@ import ws from "ws";
 import handleMessage from "./wsFunctions/HandleMessage";
 import handleClose from "./wsFunctions/HandleClose";
 import { ConnectionMap } from "./interface";
+import entriesAfterLogIn from "./wsFunctions/EntriesAfterLogIn";
 
 const PORT = 8080;
 const app = express();
@@ -21,6 +22,7 @@ wsServer.on("connection", (connection, request) => {
     if (username) {
       console.log(`User connected: ${username}`);
       connections[username] = connection;
+      entriesAfterLogIn(connection);
       connection.on("message", (message) => handleMessage(message, username));
       connection.on("close", () => handleClose(username));
     }
