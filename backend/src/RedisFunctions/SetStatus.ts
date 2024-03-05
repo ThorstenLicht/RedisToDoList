@@ -1,14 +1,15 @@
+import addMessagetypToString from "../AddMessagetypToString";
 import { getClient } from "../GetClient";
-import { Status } from "../interface";
+import { Info, Status } from "../interface";
 
-async function setStatus(status: Status, username: string): Promise<string> {
+async function setStatus(status: Status, username: string): Promise<Info> {
   try {
     const client = await getClient();
     const data = await client.HGETALL("entry:" + status.todo);
     if (data.Eigentümer !== username) {
-      return "Sie sind nicht der Eigentümer";
+      return addMessagetypToString("Sie sind nicht der Eigentümer");
     } else if (data.Status === status.status) {
-      return "To-Do wurde nicht verschoben";
+      return addMessagetypToString("To-Do wurde nicht verschoben");
     } else {
       await client.HSET("entry:" + status.todo, "Status", status.status);
       if (status.status !== "progress") {
@@ -16,11 +17,11 @@ async function setStatus(status: Status, username: string): Promise<string> {
       } else {
         await client.PERSIST("entry:" + status.todo);
       }
-      return "To-Do verschoben";
+      return addMessagetypToString("To-Do verschoben");
     }
   } catch (error) {
     console.error("Error:", error);
-    return "Es ist ein Fehler aufgetreten";
+    return addMessagetypToString("Es ist ein Fehler aufgetreten");
   }
 }
 

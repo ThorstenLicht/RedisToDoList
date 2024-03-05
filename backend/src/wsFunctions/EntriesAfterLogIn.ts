@@ -1,5 +1,6 @@
 import ws from "ws";
 import getEntries from "../RedisFunctions/GetEntries";
+import addMessagetypToString from "../AddMessagetypToString";
 
 async function entriesAfterLogIn(connection: ws) {
   try {
@@ -8,7 +9,10 @@ async function entriesAfterLogIn(connection: ws) {
     connection.send(send);
   } catch (error) {
     console.error("Error:", error);
-    connection.send("Es ist ein Fehler aufgetreten");
+    const send = JSON.stringify(
+      addMessagetypToString("Es ist ein Fehler aufgetreten")
+    );
+    connection.send(send);
   }
 }
 

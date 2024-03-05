@@ -19,8 +19,12 @@ async function getEntries() {
         entries.push(entry);
       })
     );
+    const send = {
+      messagetyp: "entries",
+      entries: entries,
+    };
 
-    return entries;
+    return send;
   } catch (error) {
     console.error("Error:", error);
     return "Es ist ein Fehler aufgetreten";

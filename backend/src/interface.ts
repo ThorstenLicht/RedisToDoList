@@ -32,3 +32,8 @@ export interface Message {
   messagetyp: string;
   entry: Entry;
 }
+
+export interface Info {
+  messagetyp: string;
+  message: string;
+}

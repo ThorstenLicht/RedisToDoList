@@ -1,9 +1,12 @@
 import { useState } from "react";
 import APILogIn from "../API/APILogIn";
+import { FunctionInput } from "../interface";
+import { useNavigate } from "react-router-dom";
 
-function LogIn() {
+function LogIn(input: FunctionInput) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   function handleUsernameChange(input: React.ChangeEvent<HTMLInputElement>) {
     setUsername(input.target.value);
@@ -15,7 +18,9 @@ function LogIn() {
 
   async function handleLogIn() {
     if (await APILogIn(username, password)) {
-      window.location.href = "/ToDoList";
+      input.setUsername(username);
+      console.log(username);
+      navigate("/ToDoList");
     }
   }
 

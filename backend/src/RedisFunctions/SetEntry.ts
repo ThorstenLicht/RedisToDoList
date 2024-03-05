@@ -1,12 +1,13 @@
+import addMessagetypToString from "../AddMessagetypToString";
 import { getClient } from "../GetClient";
-import { CreateEntry } from "../interface";
+import { CreateEntry, Info } from "../interface";
 
-async function setEntry(entry: CreateEntry): Promise<string> {
+async function setEntry(entry: CreateEntry): Promise<Info> {
   try {
     const client = await getClient();
     const todoExists = await client.exists("entry:" + entry.todo);
     if (todoExists === 1) {
-      return "To-Do exisitert bereits";
+      return addMessagetypToString("To-Do exisitert bereits");
     } else {
       await client.sendCommand([
         "HMSET",
@@ -18,11 +19,11 @@ async function setEntry(entry: CreateEntry): Promise<string> {
         "Priorität",
         "1",
       ]);
-      return "To-Do angelegt";
+      return addMessagetypToString("To-Do angelegt");
     }
   } catch (error) {
     console.error("Error:", error);
-    return "Es ist ein Fehler aufgetreten";
+    return addMessagetypToString("Es ist ein Fehler aufgetreten");
   }
 }
 
