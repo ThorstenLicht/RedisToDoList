@@ -6,7 +6,6 @@ async function APILogIn(username: string, password: string) {
     username: username,
     password: password,
   };
-  console.log(JSON.stringify(LogInData));
   try {
     const request = await fetch(`${httpUrl}/logIn`, {
       method: "POST",
@@ -16,7 +15,6 @@ async function APILogIn(username: string, password: string) {
       },
     });
     const response = await request.json();
-    console.log(response);
     if (request.ok) {
       return true;
     } else {

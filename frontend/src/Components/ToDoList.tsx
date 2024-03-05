@@ -1,46 +1,40 @@
 import useWebSocket from "react-use-websocket";
 import { wsURL } from "../GlobalURL";
-import lastMessage from "../WS/LastMessage";
+import messageController from "../WS/MessageController";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Entry } from "../interface";
+import RenderEntries from "./RenderEntries";
 
-function newEntry(sendMessage: Function) {
-  const entry = {
-    messagetyp: "new",
-    entry: {
-      todo: "Meeting13",
-      owner: "Admin",
-      status: "progress",
-    },
-  };
-  sendMessage(entry);
-}
-
-function ToDoList(input: { username: string }) {
+function ToDoList(input: {
+  username: string;
+  entries: Array<Entry>;
+  setEntries: Function;
+}) {
   //check if the user is logged in
   const navigate = useNavigate();
   useEffect(() => {
     if (input.username === "") {
       navigate("/");
     }
-  }, []);
+  }, [input.username]);
 
   const { sendJsonMessage, lastJsonMessage } = useWebSocket(wsURL, {
     share: true,
     queryParams: { username: input.username },
   });
 
-  if (lastJsonMessage) {
-    lastMessage(lastJsonMessage);
-  }
+  useEffect(() => {
+    if (lastJsonMessage) {
+      messageController(lastJsonMessage, input.entries, input.setEntries);
+    }
+  }, [lastJsonMessage]);
 
   return (
     <>
       <p>ToDoList</p>
       <p>{input.username}</p>
-      <button onClick={() => newEntry(sendJsonMessage)}>
-        Neuen Eintrag erstellen
-      </button>
+      <RenderEntries entries={input.entries} />
     </>
   );
 }

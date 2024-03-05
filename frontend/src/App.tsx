@@ -4,12 +4,11 @@ import LogIn from "./Components/LogIn";
 import ToDoList from "./Components/ToDoList";
 import Layout from "./Layout";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import { Entry } from "./interface";
 
 function App() {
   const [username, setUsername] = useState("");
-  useEffect(() => {
-    console.log(username);
-  }, [username]);
+  const [entries, setEntries] = useState<Array<Entry>>([]);
   return (
     <div>
       <BrowserRouter>
@@ -18,7 +17,13 @@ function App() {
             <Route index element={<LogIn setUsername={setUsername} />}></Route>
             <Route
               path="/ToDoList"
-              element={<ToDoList username={username} />}
+              element={
+                <ToDoList
+                  username={username}
+                  entries={entries}
+                  setEntries={setEntries}
+                />
+              }
             ></Route>
             <Route path="*" element={<ErrorComponent />}></Route>
           </Route>
