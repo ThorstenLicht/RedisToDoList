@@ -16,15 +16,15 @@ async function APILogIn(username: string, password: string) {
     });
     const response = await request.json();
     if (request.ok) {
-      return true;
+      return response;
     } else {
       CustomToast.error(response);
-      return false;
+      return null;
     }
   } catch (error) {
     console.error("Fehler bei der API-Anfrage", error);
     CustomToast.error("Server nicht erreichbar");
-    return false;
+    return null;
   }
 }
 

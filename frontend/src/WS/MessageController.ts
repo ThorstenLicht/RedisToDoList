@@ -28,6 +28,11 @@ function messageController(
       console.log(message);
       break;
     }
+    case "deleteUser": {
+      //TODO Erst ins Backend einbauen
+      console.log(message);
+      break;
+    }
     default: {
       CustomToast.error("Unbekannter Nachrichtentyp");
     }

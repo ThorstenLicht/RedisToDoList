@@ -1,9 +1,8 @@
 import { useState } from "react";
 import APILogIn from "../API/APILogIn";
-import { FunctionInput } from "../interface";
 import { useNavigate } from "react-router-dom";
 
-function LogIn(input: FunctionInput) {
+function LogIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -17,9 +16,11 @@ function LogIn(input: FunctionInput) {
   }
 
   async function handleLogIn() {
-    if (await APILogIn(username, password)) {
-      input.setUsername(username);
-      console.log(username);
+    const message = await APILogIn(username, password);
+    if (message) {
+      localStorage.setItem("username", username);
+      localStorage.setItem("token", message.token);
+      //input.setUsername(username);
       navigate("/ToDoList");
     }
   }

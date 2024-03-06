@@ -12,18 +12,25 @@ const PORT = 8080;
 const app = express();
 const wsServer = new ws.Server({ noServer: true }); //headless websocket server
 export const connections: ConnectionMap = {};
+export const tokenUserMap: { [key: string]: string } = {};
 
 wsServer.on("connection", (connection, request) => {
   const url = request?.url;
   if (url) {
-    const username = new URL(url, "ws://localhost").searchParams.get(
-      "username"
-    );
-    if (username) {
-      console.log(`User connected: ${username}`);
+    const params = new URL(url, "ws://localhost").searchParams;
+    const username = params.get("username");
+    const token = params.get("token");
+    if (username && token) {
       connections[username] = connection;
-      entriesAfterLogIn(connection);
-      connection.on("message", (message) => handleMessage(message, username));
+      if (tokenUserMap[username] === token) {
+        console.log(`User connected: ${username} with token: ${token}`);
+        entriesAfterLogIn(connection);
+        connection.on("message", (message) => handleMessage(message, username));
+      } else {
+        connection.send("Invalid token or username");
+        console.log(`${username} tried to connect with invalid token`);
+        connection.close();
+      }
       connection.on("close", () => handleClose(username));
     }
   }

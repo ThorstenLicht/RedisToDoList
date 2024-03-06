@@ -6,22 +6,25 @@ import { useEffect, useState } from "react";
 import { Entry } from "../interface";
 import RenderEntries from "./RenderEntries";
 
-function ToDoList(input: {
-  username: string;
-  entries: Array<Entry>;
-  setEntries: Function;
-}) {
+function ToDoList(input: { entries: Array<Entry>; setEntries: Function }) {
   //check if the user is logged in
   const navigate = useNavigate();
+  let username = localStorage.getItem("username");
+  let token = localStorage.getItem("token");
+  if (!username || !token) {
+    username = "";
+    token = "";
+  }
   useEffect(() => {
-    if (input.username === "") {
+    if (username === "" || token === "") {
       navigate("/");
     }
-  }, [input.username]);
+  }, [username, token]);
 
+  //WebSocket
   const { sendJsonMessage, lastJsonMessage } = useWebSocket(wsURL, {
     share: true,
-    queryParams: { username: input.username },
+    queryParams: { username: username, token: token },
   });
 
   useEffect(() => {
@@ -33,7 +36,7 @@ function ToDoList(input: {
   return (
     <>
       <p>ToDoList</p>
-      <p>{input.username}</p>
+      <p>{username}</p>
       <RenderEntries entries={input.entries} />
     </>
   );
