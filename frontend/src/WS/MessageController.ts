@@ -1,6 +1,9 @@
 import { CustomToast } from "../CustomToast";
 import { Entry } from "../interface";
 import messagetypEntries from "./MessagetypEntries";
+import messagetypNew from "./MessagetypNew";
+import messagetypPriority from "./MessagetypPriority";
+import messagetypStatus from "./MessagetypStatus";
 
 function messageController(
   message: any,
@@ -17,15 +20,15 @@ function messageController(
       break;
     }
     case "new": {
-      console.log(message);
+      messagetypNew(message.entry, entries, setEntries);
       break;
     }
     case "status": {
-      console.log(message);
+      messagetypStatus(message.entry, entries, setEntries);
       break;
     }
     case "priority": {
-      console.log(message);
+      messagetypPriority(message.entry, entries, setEntries);
       break;
     }
     case "deleteUser": {

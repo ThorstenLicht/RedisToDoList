@@ -7,6 +7,7 @@ import handleMessage from "./wsFunctions/HandleMessage";
 import handleClose from "./wsFunctions/HandleClose";
 import { ConnectionMap } from "./interface";
 import entriesAfterLogIn from "./wsFunctions/EntriesAfterLogIn";
+import addMessagetypToString from "./AddMessagetypToString";
 
 const PORT = 8080;
 const app = express();
@@ -21,17 +22,31 @@ wsServer.on("connection", (connection, request) => {
     const username = params.get("username");
     const token = params.get("token");
     if (username && token) {
-      connections[username] = connection;
-      if (tokenUserMap[username] === token) {
-        console.log(`User connected: ${username} with token: ${token}`);
-        entriesAfterLogIn(connection);
-        connection.on("message", (message) => handleMessage(message, username));
-      } else {
-        connection.send("Invalid token or username");
-        console.log(`${username} tried to connect with invalid token`);
+      if (connections[username]) {
+        const sendback = JSON.stringify(
+          addMessagetypToString(`${username} ist bereits angemeldet.`)
+        );
+        connection.send(sendback);
+        console.log(`Duplicate connection attempt for username: ${username}`);
         connection.close();
+      } else {
+        connections[username] = connection;
+        if (tokenUserMap[username] === token) {
+          console.log(`User connected: ${username} with token: ${token}`);
+          entriesAfterLogIn(connection);
+          connection.on("message", (message) =>
+            handleMessage(message, username)
+          );
+        } else {
+          const sendback = JSON.stringify(
+            addMessagetypToString("Üngültiger Token oder Benutzername")
+          );
+          connection.send(sendback);
+          console.log(`${username} tried to connect with invalid token`);
+          connection.close();
+        }
+        connection.on("close", () => handleClose(username));
       }
-      connection.on("close", () => handleClose(username));
     }
   }
 });

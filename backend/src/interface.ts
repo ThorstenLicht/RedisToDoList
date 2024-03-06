@@ -14,7 +14,6 @@ export interface Entry {
 export interface CreateEntry {
   todo: string;
   owner: string;
-  status: string;
 }
 
 export interface Status {

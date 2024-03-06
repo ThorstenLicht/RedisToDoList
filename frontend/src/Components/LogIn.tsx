@@ -15,14 +15,17 @@ function LogIn() {
     setPassword(input.target.value);
   }
 
+  const [isLoading, setIsLoading] = useState(false);
+
   async function handleLogIn() {
+    setIsLoading(true);
     const message = await APILogIn(username, password);
     if (message) {
       localStorage.setItem("username", username);
       localStorage.setItem("token", message.token);
-      //input.setUsername(username);
       navigate("/ToDoList");
     }
+    setIsLoading(false);
   }
 
   return (
@@ -46,8 +49,10 @@ function LogIn() {
       <button
         title="Klicken Sie hier um sich einzuloggen."
         onClick={() => handleLogIn()}
+        disabled={isLoading}
+        style={{ cursor: isLoading ? "wait" : "pointer" }}
       >
-        Anmelden
+        {isLoading ? "Lädt..." : "Anmelden"}
       </button>
     </div>
   );

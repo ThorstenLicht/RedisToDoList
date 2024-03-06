@@ -15,7 +15,7 @@ async function setEntry(entry: CreateEntry): Promise<Info> {
         "Eigentümer",
         entry.owner,
         "Status",
-        entry.status,
+        "progress",
         "Priorität",
         "1",
       ]);

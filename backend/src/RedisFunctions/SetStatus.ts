@@ -7,7 +7,7 @@ async function setStatus(status: Status, username: string): Promise<Info> {
     const client = await getClient();
     const data = await client.HGETALL("entry:" + status.todo);
     if (data.Eigentümer !== username) {
-      return addMessagetypToString("Sie sind nicht der Eigentümer");
+      return addMessagetypToString(`Sie haben keinen Eintrag ${status.todo}`);
     } else if (data.Status === status.status) {
       return addMessagetypToString("To-Do wurde nicht verschoben");
     } else {

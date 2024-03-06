@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Entry } from "../interface";
 import RenderEntries from "./RenderEntries";
+import { CustomToast } from "../CustomToast";
+import NewEntry from "./NewEntry";
 
 function ToDoList(input: { entries: Array<Entry>; setEntries: Function }) {
   //check if the user is logged in
@@ -15,14 +17,9 @@ function ToDoList(input: { entries: Array<Entry>; setEntries: Function }) {
     username = "";
     token = "";
   }
-  useEffect(() => {
-    if (username === "" || token === "") {
-      navigate("/");
-    }
-  }, [username, token]);
 
   //WebSocket
-  const { sendJsonMessage, lastJsonMessage } = useWebSocket(wsURL, {
+  const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(wsURL, {
     share: true,
     queryParams: { username: username, token: token },
   });
@@ -33,11 +30,24 @@ function ToDoList(input: { entries: Array<Entry>; setEntries: Function }) {
     }
   }, [lastJsonMessage]);
 
+  //useEffect(() => {}, [input.entries]);
+
+  useEffect(() => {
+    if (username === "" || token === "" || readyState === 3) {
+      navigate("/");
+      CustomToast.error("Verbindungsabbruch, bitte neu einloggen");
+    }
+  }, [username, token, readyState]);
+
   return (
     <>
       <p>ToDoList</p>
       <p>{username}</p>
-      <RenderEntries entries={input.entries} />
+      <NewEntry sendJsonMessage={sendJsonMessage} username={username} />
+      <RenderEntries
+        entries={input.entries}
+        sendJsonMessage={sendJsonMessage}
+      />
     </>
   );
 }
