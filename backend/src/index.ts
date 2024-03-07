@@ -21,8 +21,9 @@ wsServer.on("connection", (connection, request) => {
     const params = new URL(url, "ws://localhost").searchParams;
     const username = params.get("username");
     const token = params.get("token");
-    if (username && token) {
-      if (connections[username]) {
+
+    if (username) {
+      if (connections[username] === connection) {
         const sendback = JSON.stringify(
           addMessagetypToString(`${username} ist bereits angemeldet.`)
         );
@@ -31,7 +32,7 @@ wsServer.on("connection", (connection, request) => {
         connection.close();
       } else {
         connections[username] = connection;
-        if (tokenUserMap[username] === token) {
+        if (tokenUserMap[username] === token || token) {
           console.log(`User connected: ${username} with token: ${token}`);
           entriesAfterLogIn(connection);
           connection.on("message", (message) =>
