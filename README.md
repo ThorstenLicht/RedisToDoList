@@ -1,7 +1,9 @@
 # RedisToDoList
+
 Installation Guide:
 
 Phase 1: Redis Container:
+
 1. Get the code from the repostiory and go to the folder RedisToDoList in the Terminal
 2. start Docker
 3. "docker-compose -f redis-docker-compose.yml up -d" - in cmd in the repository folder with the .yml file
@@ -15,6 +17,14 @@ Phase 1: Redis Container:
 Um die Datenbank zu öffnen auf die Kachel "redis-local" klicken, am linken Rand kann CLI ausgewählt werden um Befhele eingeben zu können.
 
 Phase 2: Backend and Frontend
+
 1. go in a terminal to the folder RedisToDoList
 2. Frontend:
-    a. cd f
+   a. cd .\frontend\
+   b. npm i
+   c. npm start
+
+3. Backend:
+   a. cd .\backend\
+   b. npm i
+   c. npm start
