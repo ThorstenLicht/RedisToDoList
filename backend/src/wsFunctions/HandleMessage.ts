@@ -5,6 +5,7 @@ import setPriority from "../RedisFunctions/SetPriority";
 import deletePriority from "../RedisFunctions/DeletePriority";
 import getEntries from "../RedisFunctions/GetEntries";
 import addMessagetypToString from "../AddMessagetypToString";
+import logOut from "../RedisFunctions/LogOut";
 
 function broadcast(message: any) {
   Object.keys(connections).forEach((username) => {
@@ -52,6 +53,12 @@ async function handleMessage(bytes: any, username: string) {
           const allEvents = await getEntries();
           broadcast(allEvents);
         }
+        break;
+      case "logOut": //log out
+        const resultLogOut = await logOut(username);
+        const sendLogOut = JSON.stringify(resultLogOut);
+        connection.send(sendLogOut);
+        connection.close();
         break;
       default:
         const senddefault = JSON.stringify(

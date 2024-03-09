@@ -7,6 +7,7 @@ import { Entry } from "../interface";
 import RenderEntries from "./RenderEntries";
 import NewEntry from "./NewEntry";
 import { getCookie } from "../CookieFunctions";
+import logOut from "../LogOut";
 function ToDoList(input: { entries: Array<Entry>; setEntries: Function }) {
   //check if the user is logged in
   const navigate = useNavigate();
@@ -32,14 +33,20 @@ function ToDoList(input: { entries: Array<Entry>; setEntries: Function }) {
   //if connection is lost, redirect to login page
   useEffect(() => {
     if (username === "" || token === "" || readyState === 3) {
-      navigate("/login");
+      navigate("/");
     }
   }, [username, token, readyState]);
 
   return (
     <>
       <p>ToDoList</p>
-      <p>{username}</p>
+      <p>Willkommen zurück {username}</p>
+      <button
+        title="Klicken Sie hier um sich abzumelden."
+        onClick={() => logOut(sendJsonMessage)}
+      >
+        Abmelden
+      </button>
       <NewEntry sendJsonMessage={sendJsonMessage} />
       <RenderEntries
         entries={input.entries}

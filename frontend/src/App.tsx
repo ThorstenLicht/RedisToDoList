@@ -15,7 +15,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route path="/login" element={<LogIn />} />
+            <Route path="/" element={<LogIn />} />
             <Route
               path="/ToDoList"
               element={<ToDoList entries={entries} setEntries={setEntries} />}
