@@ -2,13 +2,11 @@ import useWebSocket from "react-use-websocket";
 import { wsURL } from "../GlobalURL";
 import messageController from "../WS/MessageController";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Entry } from "../interface";
 import RenderEntries from "./RenderEntries";
-import { CustomToast } from "../CustomToast";
 import NewEntry from "./NewEntry";
-import getCookie from "../GetCookie";
-
+import { getCookie } from "../CookieFunctions";
 function ToDoList(input: { entries: Array<Entry>; setEntries: Function }) {
   //check if the user is logged in
   const navigate = useNavigate();
@@ -31,12 +29,10 @@ function ToDoList(input: { entries: Array<Entry>; setEntries: Function }) {
     }
   }, [lastJsonMessage]);
 
-  //useEffect(() => {}, [input.entries]);
-
+  //if connection is lost, redirect to login page
   useEffect(() => {
     if (username === "" || token === "" || readyState === 3) {
-      navigate("/");
-      CustomToast.error("Verbindungsabbruch, bitte neu einloggen");
+      navigate("/login");
     }
   }, [username, token, readyState]);
 

@@ -23,7 +23,7 @@ wsServer.on("connection", async (connection, request) => {
     const token = params.get("token");
 
     if (username) {
-      if (connections[username] === connection) {
+      if (connections.hasOwnProperty(username)) {
         const sendback = JSON.stringify(
           addMessagetypToString(`${username} ist bereits angemeldet.`)
         );

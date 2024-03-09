@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ErrorComponent from "./Components/ErrorComponent";
 import LogIn from "./Components/LogIn";
 import ToDoList from "./Components/ToDoList";
@@ -15,7 +15,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<LogIn />}></Route>
+            <Route path="/login" element={<LogIn />} />
             <Route
               path="/ToDoList"
               element={<ToDoList entries={entries} setEntries={setEntries} />}
