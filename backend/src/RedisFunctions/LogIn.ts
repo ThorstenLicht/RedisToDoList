@@ -1,7 +1,6 @@
 import { getClient } from "../GetClient";
 import { Request, Response } from "express";
 import crypto from "crypto";
-import { tokenUserMap } from "..";
 
 function generateToken() {
   return crypto.randomBytes(16).toString("hex");
@@ -17,11 +16,21 @@ async function logIn(req: Request, res: Response) {
       res.status(401).json("Passwort oder Benutzername falsch");
     } else {
       const TTL = await client.TTL("user:" + username);
+      const existToken = await client.EXISTS("token:" + username);
+      let token;
+      if (existToken) {
+        token = await client.get("token:" + username);
+      } else {
+        token = generateToken();
+        await client.set("token:" + username, token, {
+          EX: 86400, //TTL 1 Tag
+          NX: true, //Eindeutiger Schlüssel
+        });
+      }
       const message = {
-        token: generateToken(),
+        token: token,
         status: "",
       };
-      tokenUserMap[username] = message.token;
       if (TTL >= 0) {
         message.status = "Passwort ändern";
       } else {
