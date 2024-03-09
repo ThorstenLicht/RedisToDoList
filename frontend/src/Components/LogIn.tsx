@@ -21,8 +21,13 @@ function LogIn() {
     setIsLoading(true);
     const message = await APILogIn(username, password);
     if (message) {
-      localStorage.setItem("username", username);
-      localStorage.setItem("token", message.token);
+      sessionStorage.setItem("username", username);
+      document.cookie = `username${username}=${username}; expires=${new Date(
+        Date.now() + 24 * 60 * 60 * 1000
+      ).toUTCString()}`;
+      document.cookie = `token${username}=${message.token}; expires=${new Date(
+        Date.now() + 24 * 60 * 60 * 1000
+      ).toUTCString()}`;
       navigate("/ToDoList");
     }
     setIsLoading(false);

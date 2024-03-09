@@ -7,12 +7,13 @@ import { Entry } from "../interface";
 import RenderEntries from "./RenderEntries";
 import { CustomToast } from "../CustomToast";
 import NewEntry from "./NewEntry";
+import getCookie from "../GetCookie";
 
 function ToDoList(input: { entries: Array<Entry>; setEntries: Function }) {
   //check if the user is logged in
   const navigate = useNavigate();
-  let username = localStorage.getItem("username");
-  let token = localStorage.getItem("token");
+  let username = sessionStorage.getItem("username");
+  let token = getCookie(`token${username}`);
   if (!username || !token) {
     username = "";
     token = "";
@@ -43,7 +44,7 @@ function ToDoList(input: { entries: Array<Entry>; setEntries: Function }) {
     <>
       <p>ToDoList</p>
       <p>{username}</p>
-      <NewEntry sendJsonMessage={sendJsonMessage} username={username} />
+      <NewEntry sendJsonMessage={sendJsonMessage} />
       <RenderEntries
         entries={input.entries}
         sendJsonMessage={sendJsonMessage}

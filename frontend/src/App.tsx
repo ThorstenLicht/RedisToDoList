@@ -9,10 +9,6 @@ import { Entry } from "./interface";
 function App() {
   //const [username, setUsername] = useState("");
   const [entries, setEntries] = useState<Array<Entry>>([]);
-  //clear local storage after leaving the page
-  window.addEventListener("beforeunload", () => {
-    localStorage.clear();
-  });
 
   return (
     <div>
