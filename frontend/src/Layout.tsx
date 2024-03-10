@@ -11,7 +11,7 @@ const Layout = () => {
       const username = existsCookie();
       if (username) {
         sessionStorage.setItem("username", username);
-        navigate("/ToDoList");
+        navigate("/loggedIn/ToDoList");
       }
     };
     navigateToToDoList();

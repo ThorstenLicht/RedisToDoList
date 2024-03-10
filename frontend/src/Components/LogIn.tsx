@@ -28,7 +28,7 @@ function LogIn() {
       document.cookie = `token${username}=${message.token}; expires=${new Date(
         Date.now() + 24 * 60 * 60 * 1000
       ).toUTCString()}`;
-      navigate("/ToDoList");
+      navigate("/loggedIn/ToDoList");
     }
     setIsLoading(false);
   }
