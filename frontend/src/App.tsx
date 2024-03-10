@@ -5,6 +5,7 @@ import ToDoList from "./Components/ToDoList";
 import Layout from "./Layout";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { Entry } from "./interface";
+import UserManagement from "./Components/UserManagement";
 
 function App() {
   //const [username, setUsername] = useState("");
@@ -24,6 +25,7 @@ function App() {
               path="/ToDoList"
               element={<ToDoList entries={entries} setEntries={setEntries} />}
             ></Route>
+            <Route path="/UserManagement" element={<UserManagement />}></Route>
             <Route path="*" element={<ErrorComponent />}></Route>
           </Route>
         </Routes>

@@ -41,6 +41,9 @@ function ToDoList(input: { entries: Array<Entry>; setEntries: Function }) {
 
   return (
     <>
+      <button rel="stylesheet" onClick={() => navigate("/UserManagement")}>
+        Benutzerverwaltung
+      </button>
       <p>ToDoList</p>
       <p>{username}</p>
       <NewEntry sendJsonMessage={sendJsonMessage} username={username} />

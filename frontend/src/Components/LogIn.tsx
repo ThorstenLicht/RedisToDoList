@@ -21,8 +21,8 @@ function LogIn() {
     setIsLoading(true);
     const message = await APILogIn(username, password);
     if (message) {
-      localStorage.setItem("username", username);
-      localStorage.setItem("token", message.token);
+      localStorage.setItem(`username`, username);
+      localStorage.setItem(`token`, message.token);
       navigate("/ToDoList");
     }
     setIsLoading(false);
