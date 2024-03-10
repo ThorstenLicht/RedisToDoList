@@ -1,7 +1,22 @@
 import { ToastContainer } from "react-toastify";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { existsCookie } from "./CookieFunctions";
 
 const Layout = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const navigateToToDoList = () => {
+      const username = existsCookie();
+      if (username) {
+        sessionStorage.setItem("username", username);
+        navigate("/loggedIn/ToDoList");
+      }
+    };
+    navigateToToDoList();
+  }, []);
+
   return (
     <div>
       <header>

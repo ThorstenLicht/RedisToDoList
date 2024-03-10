@@ -18,7 +18,7 @@ function NewEntry(input: NewEntryProps) {
         messagetyp: "new",
         entry: {
           todo: title,
-          owner: input.username,
+          owner: sessionStorage.getItem("username"),
           status: "progress",
         },
       });

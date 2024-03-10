@@ -17,5 +17,4 @@ export interface InteractionsProps {
 
 export interface NewEntryProps {
   sendJsonMessage: Function;
-  username: string;
 }

@@ -8,14 +8,14 @@ import handleClose from "./wsFunctions/HandleClose";
 import { ConnectionMap } from "./interface";
 import entriesAfterLogIn from "./wsFunctions/EntriesAfterLogIn";
 import addMessagetypToString from "./AddMessagetypToString";
+import { getClient } from "./GetClient";
 
 const PORT = 8080;
 const app = express();
 const wsServer = new ws.Server({ noServer: true }); //headless websocket server
 export const connections: ConnectionMap = {};
-export const tokenUserMap: { [key: string]: string } = {};
 
-wsServer.on("connection", (connection, request) => {
+wsServer.on("connection", async (connection, request) => {
   const url = request?.url;
   if (url) {
     const params = new URL(url, "ws://localhost").searchParams;
@@ -23,7 +23,7 @@ wsServer.on("connection", (connection, request) => {
     const token = params.get("token");
 
     if (username) {
-      if (connections[username] === connection) {
+      if (connections.hasOwnProperty(username)) {
         const sendback = JSON.stringify(
           addMessagetypToString(`${username} ist bereits angemeldet.`)
         );
@@ -32,7 +32,9 @@ wsServer.on("connection", (connection, request) => {
         connection.close();
       } else {
         connections[username] = connection;
-        if (tokenUserMap[username] === token || token) {
+        const client = await getClient();
+        const savedToken = await client.get("token:" + username);
+        if (savedToken === token) {
           console.log(`User connected: ${username} with token: ${token}`);
           entriesAfterLogIn(connection);
           connection.on("message", (message) =>
