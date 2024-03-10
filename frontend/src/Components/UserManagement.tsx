@@ -4,13 +4,29 @@ import { useNavigate } from "react-router-dom";
 import APICreateUser from "../API/APICreateUser";
 import { CustomToast } from "../CustomToast";
 import APIGetUsers from "../API/APIGetUsers";
+import { getCookie } from "../CookieFunctions";
+import useWebSocket from "react-use-websocket";
+import { wsURL } from "../GlobalURL";
 
 function UserManagement() {
-  const [username, setUsername] = useState("");
+  let [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [users, setUsers] = useState<string[]>([]);
 
   const navigate = useNavigate();
+
+  let importedusername = sessionStorage.getItem("username");
+
+  //WebSocket
+  let token = getCookie(`token${username}`);
+  if (!username || !token) {
+    username = "";
+    token = "";
+  }
+  const { sendJsonMessage } = useWebSocket(wsURL, {
+    share: true,
+    queryParams: { username: username, token: token },
+  });
 
   function handleUsernameChange(input: React.ChangeEvent<HTMLInputElement>) {
     setUsername(input.target.value);
@@ -64,6 +80,14 @@ function UserManagement() {
 
   return (
     <div>
+      <h1>Benutzermanagment</h1>
+
+      <button
+        title="Klicken Sie hier um zur ToDoListe zu kommen."
+        onClick={() => navigate("/loggedIn/ToDoList")}
+      >
+        ToDoListe
+      </button>
       <h1>bestehende Benutzer</h1>
 
       <AllUsers />
@@ -92,37 +116,8 @@ function UserManagement() {
         style={{ cursor: isLoading ? "wait" : "pointer" }}
       >
         Benutzer anlegen
-import { useNavigate } from "react-router-dom";
-import { getCookie } from "../CookieFunctions";
-import useWebSocket from "react-use-websocket";
-import { wsURL } from "../GlobalURL";
-
-function UserManagement() {
-  const navigate = useNavigate();
-  let username = sessionStorage.getItem("username");
-
-  //WebSocket
-  let token = getCookie(`token${username}`);
-  if (!username || !token) {
-    username = "";
-    token = "";
-  }
-  const { sendJsonMessage } = useWebSocket(wsURL, {
-    share: true,
-    queryParams: { username: username, token: token },
-  });
-
-  return (
-    <div>
-      <h1>Benutzermanagment</h1>
-      <button
-        title="Klicken Sie hier um zur ToDoListe zu kommen."
-        onClick={() => navigate("/loggedIn/ToDoList")}
-      >
-        ToDoListe
       </button>
     </div>
   );
 }
-
 export default UserManagement;
