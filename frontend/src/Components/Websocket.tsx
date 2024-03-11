@@ -1,12 +1,11 @@
-import { Outlet, OutletProps, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { getCookie } from "../CookieFunctions";
 import useWebSocket from "react-use-websocket";
 import { useEffect } from "react";
 import messageController from "../WS/MessageController";
 import { Entry } from "../interface";
 import { wsURL } from "../GlobalURL";
-import logOut from "../LogOut";
-import { CustomToast } from "../CustomToast";
+import logOut from "../WS/LogOut";
 
 function Websocket(input: { entries: Array<Entry>; setEntries: Function }) {
   //check if the user is logged in

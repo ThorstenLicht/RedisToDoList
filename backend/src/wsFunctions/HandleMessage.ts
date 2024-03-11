@@ -4,8 +4,8 @@ import setStatus from "../RedisFunctions/SetStatus";
 import setPriority from "../RedisFunctions/SetPriority";
 import deletePriority from "../RedisFunctions/DeletePriority";
 import getEntries from "../RedisFunctions/GetEntries";
-import addMessagetypToString from "../AddMessagetypToString";
 import logOut from "../RedisFunctions/LogOut";
+import { addError } from "../AddMessagetypToString";
 
 function broadcast(message: any) {
   Object.keys(connections).forEach((username) => {
@@ -61,16 +61,14 @@ async function handleMessage(bytes: any, username: string) {
         connection.close();
         break;
       default:
-        const senddefault = JSON.stringify(
-          addMessagetypToString("Fehlerhafte Anfrage")
-        );
+        const senddefault = JSON.stringify(addError("Fehlerhafte Anfrage"));
         connection.send(senddefault);
         break;
     }
   } catch (error) {
     console.error("Error:", error);
     const connection = connections[username];
-    const send = JSON.stringify(addMessagetypToString("Fehlerhafte Anfrage"));
+    const send = JSON.stringify(addError("Fehlerhafte Anfrage"));
     connection.send(send);
   }
 }

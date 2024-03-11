@@ -5,6 +5,7 @@ import { Entry } from "../interface";
 import RenderEntries from "./RenderEntries";
 import NewEntry from "./NewEntry";
 import { getCookie } from "../CookieFunctions";
+import deletePriorities from "../WS/deletePriorities";
 
 function ToDoList(input: { entries: Array<Entry>; setEntries: Function }) {
   const navigate = useNavigate();
@@ -43,6 +44,14 @@ function ToDoList(input: { entries: Array<Entry>; setEntries: Function }) {
       >
         Benutzerverwaltung
       </button>
+      {username === "Admin" && (
+        <button
+          title="Klicken Sie hier um alle Prioritäten zu löschen."
+          onClick={() => deletePriorities(sendJsonMessage)}
+        >
+          Alle Prioritäten löschen
+        </button>
+      )}
       <NewEntry sendJsonMessage={sendJsonMessage} />
       <h2>ToDos in Bearbeitung</h2>
       <RenderEntries

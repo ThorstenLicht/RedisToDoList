@@ -1,4 +1,4 @@
-import addMessagetypToString from "../AddMessagetypToString";
+import { addError, addSuccess } from "../AddMessagetypToString";
 import { Info } from "../interface";
 import getEntries from "./GetEntries";
 import setPriority from "./SetPriority";
@@ -6,11 +6,11 @@ import setPriority from "./SetPriority";
 async function deletePriority(username: string): Promise<Info> {
   try {
     if (username !== "Admin") {
-      return addMessagetypToString("Sie sind nicht berechtigt");
+      return addError("Sie sind nicht berechtigt");
     } else {
       const fullData = await getEntries();
       if (fullData === "Es ist ein Fehler aufgetreten") {
-        return addMessagetypToString(
+        return addError(
           "Es ist ein Fehler beim Abrufen der To-Do Einträge aufgetreten"
         );
       } else {
@@ -18,12 +18,12 @@ async function deletePriority(username: string): Promise<Info> {
           entry.priority = "1";
           await setPriority(entry);
         }
-        return addMessagetypToString("Prioritäten zurückgesetzt");
+        return addSuccess("Prioritäten zurückgesetzt");
       }
     }
   } catch (error) {
     console.error("Error:", error);
-    return addMessagetypToString("Es ist ein Fehler aufgetreten");
+    return addError("Es ist ein Fehler aufgetreten");
   }
 }
 

@@ -7,8 +7,8 @@ import handleMessage from "./wsFunctions/HandleMessage";
 import handleClose from "./wsFunctions/HandleClose";
 import { ConnectionMap } from "./interface";
 import entriesAfterLogIn from "./wsFunctions/EntriesAfterLogIn";
-import addMessagetypToString from "./AddMessagetypToString";
 import { getClient } from "./GetClient";
+import { addError } from "./AddMessagetypToString";
 
 const PORT = 8080;
 const app = express();
@@ -25,7 +25,7 @@ wsServer.on("connection", async (connection, request) => {
     if (username) {
       if (connections.hasOwnProperty(username)) {
         const sendback = JSON.stringify(
-          addMessagetypToString(`${username} ist bereits angemeldet.`)
+          addError(`${username} ist bereits angemeldet.`)
         );
         connection.send(sendback);
         console.log(`Duplicate connection attempt for username: ${username}`);
@@ -42,7 +42,7 @@ wsServer.on("connection", async (connection, request) => {
           );
         } else {
           const sendback = JSON.stringify(
-            addMessagetypToString("Üngültiger Token oder Benutzername")
+            addError("Üngültiger Token oder Benutzername")
           );
           connection.send(sendback);
           console.log(`${username} tried to connect with invalid token`);

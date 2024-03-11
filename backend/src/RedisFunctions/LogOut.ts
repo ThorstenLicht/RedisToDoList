@@ -1,4 +1,4 @@
-import addMessagetypToString from "../AddMessagetypToString";
+import { addError, addSuccess } from "../AddMessagetypToString";
 import { getClient } from "../GetClient";
 
 async function logOut(username: string) {
@@ -6,13 +6,13 @@ async function logOut(username: string) {
     const client = await getClient();
     const result = await client.DEL("token:" + username);
     if (result === 0) {
-      return addMessagetypToString("Kein Eintrag in der Datenbank gefunden");
+      return addError("Kein Eintrag in der Datenbank gefunden");
     } else {
-      return addMessagetypToString("Sie wurden erfolgreich ausgeloggt");
+      return addSuccess("Sie wurden erfolgreich ausgeloggt");
     }
   } catch (error) {
     console.error("Error:", error);
-    return addMessagetypToString("Es ist ein Fehler aufgetreten");
+    return addError("Es ist ein Fehler aufgetreten");
   }
 }
 

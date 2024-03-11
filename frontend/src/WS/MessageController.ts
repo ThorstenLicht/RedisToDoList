@@ -15,6 +15,14 @@ function messageController(
       CustomToast.info(message.message);
       break;
     }
+    case "error": {
+      CustomToast.error(message.message);
+      break;
+    }
+    case "success": {
+      CustomToast.success(message.message);
+      break;
+    }
     case "entries": {
       messagetypEntries(message.entries, setEntries);
       break;

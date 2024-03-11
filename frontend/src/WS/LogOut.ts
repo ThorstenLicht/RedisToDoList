@@ -1,4 +1,4 @@
-import { deleteCookie } from "./CookieFunctions";
+import { deleteCookie } from "../CookieFunctions";
 
 function logOut(sendJsonMessage: Function) {
   const username = sessionStorage.getItem("username");
