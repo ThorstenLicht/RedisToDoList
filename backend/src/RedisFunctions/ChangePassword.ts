@@ -6,8 +6,8 @@ async function changePassword(req: Request, res: Response) {
     const username = req.body.username;
     const password = req.body.password;
     const client = await getClient();
-    const result = await client.set("user:" + username, password);
-    res.status(200).json(result);
+    await client.set("user:" + username, password);
+    res.status(200).json("Passwort erfolgreich geändert");
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json("Es ist ein Fehler aufgetreten");
