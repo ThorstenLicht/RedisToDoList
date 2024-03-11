@@ -9,6 +9,7 @@ import useWebSocket from "react-use-websocket";
 import { wsURL } from "../GlobalURL";
 
 function UserManagement() {
+  let [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [users, setUsers] = useState<string[]>([]);
 
@@ -17,17 +18,11 @@ function UserManagement() {
   let importedusername = sessionStorage.getItem("username");
 
   //WebSocket
-  const [username, setUsername] = useState("");
-  const [token, setToken] = useState("");
-
-  useEffect(() => {
-    const storedUsername = sessionStorage.getItem("username");
-    const storedToken = getCookie(`token${storedUsername}`);
-
-    setUsername(storedUsername || "");
-    setToken(storedToken || "");
-  }, []);
-
+  let token = getCookie(`token${username}`);
+  if (!username || !token) {
+    username = "";
+    token = "";
+  }
   const { sendJsonMessage } = useWebSocket(wsURL, {
     share: true,
     queryParams: { username: username, token: token },
