@@ -5,14 +5,15 @@ import { useEffect } from "react";
 import messageController from "../WS/MessageController";
 import { Entry } from "../interface";
 import { wsURL } from "../GlobalURL";
-import { CustomToast } from "../CustomToast";
 import logOut from "../LogOut";
+import { CustomToast } from "../CustomToast";
 
 function Websocket(input: { entries: Array<Entry>; setEntries: Function }) {
   //check if the user is logged in
   const navigate = useNavigate();
   let username = sessionStorage.getItem("username");
   let token = getCookie(`token${username}`);
+  console.log(username, token);
   if (!username || !token) {
     username = "";
     token = "";
@@ -33,6 +34,7 @@ function Websocket(input: { entries: Array<Entry>; setEntries: Function }) {
   //if connection is lost, redirect to login page
   useEffect(() => {
     if (username === "" || token === "" || readyState === 3) {
+      console.log(username, token, readyState);
       navigate("/");
     }
   }, [username, token, readyState]);

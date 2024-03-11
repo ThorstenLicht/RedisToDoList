@@ -13,7 +13,7 @@ async function setStatus(status: Status, username: string): Promise<Info> {
     } else {
       await client.HSET("entry:" + status.todo, "Status", status.status);
       if (status.status !== "progress") {
-        await client.EXPIRE("entry:" + status.todo, 3600);
+        await client.EXPIRE("entry:" + status.todo, 60);
       } else {
         await client.PERSIST("entry:" + status.todo);
       }

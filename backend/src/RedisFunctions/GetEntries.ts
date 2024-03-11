@@ -15,6 +15,7 @@ async function getEntries() {
           owner: hash["Eigentümer"],
           status: hash["Status"],
           priority: hash["Priorität"],
+          remainingTime: await client.TTL(key),
         };
         entries.push(entry);
       })

@@ -9,6 +9,7 @@ export interface Entry {
   owner: string;
   status: string;
   priority: string;
+  remainingTime: number;
 }
 
 export interface CreateEntry {
