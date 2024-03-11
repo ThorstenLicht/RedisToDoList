@@ -6,7 +6,7 @@ async function setStatus(status: Status, username: string): Promise<Info> {
   try {
     const client = await getClient();
     const data = await client.HGETALL("entry:" + status.todo);
-    if (data.Eigentümer !== username) {
+    if (data.Eigentümer !== username && username !== "Admin") {
       return addError(`Sie haben keinen Eintrag ${status.todo}`);
     } else if (data.Status === status.status) {
       return addInfo("To-Do wurde nicht verschoben");

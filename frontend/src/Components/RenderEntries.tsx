@@ -11,8 +11,7 @@ function RenderEntries(input: RenderEntriesProps) {
         {input.entries.map((entry) => (
           <div>
             <h3>{entry.todo}</h3>
-            <p>{entry.owner}</p>
-            <p>{entry.priority}</p>
+            <p>Eigentümer: {entry.owner}</p>
             {entry.remainingTime >= 0 ? (
               <Countdown
                 startCount={entry.remainingTime}

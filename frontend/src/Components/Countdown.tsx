@@ -29,11 +29,14 @@ function Countdown(input: {
     }
     const timerId = setInterval(() => {
       setCount((prevCount) => prevCount - 1);
+      if (input.entry.status === "progress") {
+        clearInterval(timerId);
+      }
     }, 1000);
     return () => clearInterval(timerId);
   }, [count, input.allEntries]);
 
-  return <div>{formatSeconds(count)}</div>;
+  return <p>Verbliebene Zeit: {formatSeconds(count)}</p>;
 }
 
 export default Countdown;

@@ -16,7 +16,7 @@ async function deletePriority(username: string): Promise<Info> {
       } else {
         for (const entry of fullData.entries) {
           entry.priority = "1";
-          await setPriority(entry);
+          await setPriority(entry); //This function already checks if the entry is in progress and only will change the priority if it is
         }
         return addSuccess("Prioritäten zurückgesetzt");
       }
