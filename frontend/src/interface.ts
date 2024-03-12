@@ -6,6 +6,12 @@ export interface Entry {
   remainingTime: number;
 }
 
+export interface User {
+  username: string;
+  password: string | null;
+  remainingTime: number;
+}
+
 export interface RenderEntriesProps {
   entries: Array<Entry>;
   sendJsonMessage: Function;

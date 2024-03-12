@@ -1,14 +1,20 @@
 import { CustomToast } from "../CustomToast";
-import { Entry } from "../interface";
+import { Entry, User } from "../interface";
+import changePasswordAdminInfo from "./ChangePasswordAdminInfo";
+import messagetypDeleteUserAdminInfo from "./MessagetypDeleteUserAdminInfo";
+import messagetypDeleteUser from "./MessagetypDelteUser";
 import messagetypEntries from "./MessagetypEntries";
 import messagetypNew from "./MessagetypNew";
 import messagetypPriority from "./MessagetypPriority";
+import messagetypSetUser from "./MessagetypSetUser";
 import messagetypStatus from "./MessagetypStatus";
 
 function messageController(
   message: any,
   entries: Array<Entry>,
-  setEntries: Function
+  setEntries: Function,
+  setUsers: Function,
+  users: Array<User>
 ) {
   switch (message.messagetyp) {
     case "info": {
@@ -39,9 +45,25 @@ function messageController(
       messagetypPriority(message.entry, entries, setEntries);
       break;
     }
+    case "setUser": {
+      messagetypSetUser(message.logInData, setUsers, users);
+      break;
+    }
     case "deleteUser": {
-      //TODO Erst ins Backend einbauen
-      console.log(message);
+      messagetypDeleteUser(message.username);
+      break;
+    }
+    case "deleteUserAdminInfo": {
+      messagetypDeleteUserAdminInfo(
+        message.message,
+        users,
+        setUsers,
+        message.username
+      );
+      break;
+    }
+    case "changePasswordAdminInfo": {
+      changePasswordAdminInfo(users, setUsers, message.username);
       break;
     }
     default: {

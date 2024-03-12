@@ -1,5 +1,6 @@
 import { CustomToast } from "../CustomToast";
 import { httpUrl } from "../GlobalURL";
+import { User } from "../interface";
 
 async function APIGetUsers() {
   try {
@@ -9,7 +10,7 @@ async function APIGetUsers() {
         "Content-Type": "application/json; charset=UTF-8",
       },
     });
-    const response: Array<string> = await request.json();
+    const response: Array<User> = await request.json();
     if (request.ok) {
       return response;
     } else {

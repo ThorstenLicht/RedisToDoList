@@ -5,7 +5,9 @@ import setPriority from "../RedisFunctions/SetPriority";
 import deletePriority from "../RedisFunctions/DeletePriority";
 import getEntries from "../RedisFunctions/GetEntries";
 import logOut from "../RedisFunctions/LogOut";
-import { addError } from "../AddMessagetypToString";
+import { addError, addInfo } from "../AddMessagetypToString";
+import setUser from "../RedisFunctions/SetUser";
+import deleteUser from "../RedisFunctions/DeleteUser";
 
 function broadcast(message: any) {
   Object.keys(connections).forEach((username) => {
@@ -60,8 +62,40 @@ async function handleMessage(bytes: any, username: string) {
         connection.send(sendLogOut);
         connection.close();
         break;
+      case "getEntries": //get Entries
+        const resultGetEntries = await getEntries();
+        const sendGetEntries = JSON.stringify(resultGetEntries);
+        connection.send(sendGetEntries);
+        break;
+
+      case "setUser": //new User
+        const resultSetUser = await setUser(
+          message.logInData.username,
+          message.logInData.password,
+          username
+        );
+        const sendSetUser = JSON.stringify(resultSetUser);
+        if (resultSetUser === "Nutzer wurde angelegt") {
+          connection.send(JSON.stringify(message));
+        } else {
+          connection.send(sendSetUser);
+        }
+        break;
+      case "deleteUser": //delete User
+        const resultDeleteUser = await deleteUser(message.username, username);
+        const sendDelteUser = JSON.stringify(resultDeleteUser);
+        connection.send(sendDelteUser);
+        if (resultDeleteUser.message === "Benutzer gelöscht") {
+          const deadConnection = connections[message.username];
+          const sendDeadConnection = message;
+          deadConnection.send(JSON.stringify(sendDeadConnection));
+          deadConnection.close();
+        }
+        break;
       default:
-        const senddefault = JSON.stringify(addError("Fehlerhafte Anfrage"));
+        const senddefault = JSON.stringify(
+          addError("Unbekannter Nachrichtentyp")
+        );
         connection.send(senddefault);
         break;
     }

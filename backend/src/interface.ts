@@ -37,3 +37,9 @@ export interface Info {
   messagetyp: string;
   message: string;
 }
+
+export interface User {
+  username: string;
+  password: string | null;
+  remainingTime: number;
+}

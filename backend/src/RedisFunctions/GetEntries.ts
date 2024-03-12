@@ -21,6 +21,7 @@ async function getEntries() {
             remainingTime: remainingTime,
           };
           entries.push(entry);
+          console.log(entry);
         }
       })
     );
@@ -32,6 +33,7 @@ async function getEntries() {
     return send;
   } catch (error) {
     console.error("Error:", error);
+    console.log("Hier tritt der Fehler auf");
     return "Es ist ein Fehler aufgetreten";
   }
 }

@@ -138,3 +138,8 @@ HINCRBY <keyname> <field> <amount>
 
 30. Delete a field in a hash
 HDEL <keyname> <field>
+
+
+Reset:
+31. Delete complete Database
+FLUSHDB 

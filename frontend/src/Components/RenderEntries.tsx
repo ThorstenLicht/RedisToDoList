@@ -1,5 +1,5 @@
 import { RenderEntriesProps } from "../interface";
-import Countdown from "./Countdown";
+import CountdownEntry from "./CountdownEntry";
 import Interactions from "./Interactions";
 
 function RenderEntries(input: RenderEntriesProps) {
@@ -13,7 +13,7 @@ function RenderEntries(input: RenderEntriesProps) {
             <h3>{entry.todo}</h3>
             <p>Eigentümer: {entry.owner}</p>
             {entry.remainingTime >= 0 ? (
-              <Countdown
+              <CountdownEntry
                 startCount={entry.remainingTime}
                 allEntries={input.allEntries}
                 entry={entry}

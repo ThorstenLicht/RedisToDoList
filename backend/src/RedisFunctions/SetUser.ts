@@ -1,19 +1,27 @@
+import { addError } from "../AddMessagetypToString";
 import { getClient } from "../GetClient";
-import { Request, Response } from "express";
 
-async function setUser(req: Request, res: Response) {
+async function setUser(username: string, password: string, admin: string) {
   try {
-    const username = req.body.username;
-    const password = req.body.password;
-    const client = await getClient();
-    const result = await client.set("user:" + username, password, {
-      EX: 3600, //TTL 1 Stunde
-      NX: true, //Eindeutiger Schlüssel
-    });
-    res.status(200).json(result);
+    if (admin !== "Admin") {
+      return addError("Sie sind nicht berechtigt, diese Funktion zu nutzen.");
+    } else {
+      const client = await getClient();
+      const usernameExists = await client.exists(username);
+      if (usernameExists === 1) {
+        return addError("Benutzer exisitert bereits");
+      } else {
+        await client.set(username, password, {
+          EX: 3600, //TTL 1 Stunde
+          NX: true, //Eindeutiger Schlüssel
+        });
+        await client.SADD("usersToDo", username);
+        return "Nutzer wurde angelegt";
+      }
+    }
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json("Es ist ein Fehler aufgetreten");
+    return addError("Es ist ein Fehler aufgetreten.");
   }
 }
 

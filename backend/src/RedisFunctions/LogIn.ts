@@ -11,11 +11,11 @@ async function logIn(req: Request, res: Response) {
     const username = req.body.username;
     const password = req.body.password;
     const client = await getClient();
-    const result = await client.get("user:" + username);
+    const result = await client.get(username);
     if (password !== result || !result) {
       res.status(401).json("Passwort oder Benutzername falsch");
     } else {
-      const TTL = await client.TTL("user:" + username);
+      const TTL = await client.TTL(username);
       const existToken = await client.EXISTS("token:" + username);
       let token;
       if (existToken) {

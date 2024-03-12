@@ -6,6 +6,7 @@ import RenderEntries from "./RenderEntries";
 import NewEntry from "./NewEntry";
 import { getCookie } from "../CookieFunctions";
 import deletePriorities from "../WS/deletePriorities";
+import { useEffect } from "react";
 
 function ToDoList(input: { entries: Array<Entry>; setEntries: Function }) {
   const navigate = useNavigate();
@@ -34,6 +35,16 @@ function ToDoList(input: { entries: Array<Entry>; setEntries: Function }) {
     share: true,
     queryParams: { username: username, token: token },
   });
+
+  useEffect(() => {
+    async function getEntries() {
+      const allEntries = {
+        messagetyp: "getEntries",
+      };
+      sendJsonMessage(allEntries);
+    }
+    getEntries();
+  }, []);
 
   return (
     <>
