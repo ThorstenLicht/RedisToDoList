@@ -1,7 +1,7 @@
 import { ToastContainer } from "react-toastify";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { existsCookie } from "./CookieFunctions";
+import { existsCookie, getCookie } from "./CookieFunctions";
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -14,7 +14,16 @@ const Layout = () => {
         navigate("/loggedIn/ToDoList");
       }
     };
-    navigateToToDoList();
+    if (!sessionStorage.getItem("username")) {
+      navigateToToDoList();
+    } else if (
+      getCookie("username" + sessionStorage.getItem("username")) &&
+      getCookie("token" + sessionStorage.getItem("username"))
+    ) {
+      navigate("/loggedIn/ToDoList");
+    } else {
+      navigate("/");
+    }
   }, []);
 
   return (

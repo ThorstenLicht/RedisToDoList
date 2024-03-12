@@ -5,19 +5,23 @@ async function getEntries() {
   try {
     const client = await getClient();
     const entries: Array<Entry> = [];
-    const keys = await client.keys("entry:*");
+    const todos = await client.SMEMBERS("entries");
     await Promise.all(
-      keys.map(async (key) => {
-        const hash = await client.HGETALL(key);
-        const todo = key.split(":")[1]; // clean todo
-        const entry: Entry = {
-          todo: todo,
-          owner: hash["Eigentümer"],
-          status: hash["Status"],
-          priority: hash["Priorität"],
-          remainingTime: await client.TTL(key),
-        };
-        entries.push(entry);
+      todos.map(async (todo) => {
+        const remainingTime = await client.TTL(todo);
+        if (remainingTime === -2) {
+          await client.SREM("entries", todo); //needed to clear the db from old entries
+        } else {
+          const hash = await client.HGETALL(todo);
+          const entry: Entry = {
+            todo: todo,
+            owner: hash["Eigentümer"],
+            status: hash["Status"],
+            priority: hash["Priorität"],
+            remainingTime: remainingTime,
+          };
+          entries.push(entry);
+        }
       })
     );
     const send = {

@@ -45,7 +45,9 @@ wsServer.on("connection", async (connection, request) => {
             addError("Üngültiger Token oder Benutzername")
           );
           connection.send(sendback);
-          console.log(`${username} tried to connect with invalid token`);
+          console.log(
+            `${username} tried to connect with invalid token ${token}`
+          );
           connection.close();
         }
         connection.on("close", () => handleClose(username));

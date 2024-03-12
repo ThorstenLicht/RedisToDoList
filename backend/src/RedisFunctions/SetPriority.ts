@@ -5,7 +5,7 @@ import { Info, Priority } from "../interface";
 async function setPriority(priority: Priority): Promise<Info> {
   try {
     const client = await getClient();
-    const data = await client.HGETALL("entry:" + priority.todo);
+    const data = await client.HGETALL(priority.todo);
     if (parseInt(priority.priority) < 1 || parseInt(priority.priority) > 3) {
       return addInfo("Priorität muss zwischen 1 und 3 liegen");
     } else if (data.Priorität === priority.priority) {
@@ -13,11 +13,7 @@ async function setPriority(priority: Priority): Promise<Info> {
     } else if (data.Status !== "progress") {
       return addError("To-Do ist nicht in Arbeit");
     } else {
-      await client.HSET(
-        "entry:" + priority.todo,
-        "Priorität",
-        priority.priority
-      );
+      await client.HSET(priority.todo, "Priorität", priority.priority);
       return addSuccess("Priorität wurde geändert");
     }
   } catch (error) {

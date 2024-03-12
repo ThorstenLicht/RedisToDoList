@@ -5,6 +5,7 @@ import { addError } from "../AddMessagetypToString";
 async function entriesAfterLogIn(connection: ws) {
   try {
     const allEvents = await getEntries();
+    console.log("allEvents", allEvents);
     const send = JSON.stringify(allEvents);
     connection.send(send);
   } catch (error) {

@@ -5,13 +5,13 @@ import { CreateEntry, Info } from "../interface";
 async function setEntry(entry: CreateEntry): Promise<Info> {
   try {
     const client = await getClient();
-    const todoExists = await client.exists("entry:" + entry.todo);
+    const todoExists = await client.exists(entry.todo);
     if (todoExists === 1) {
       return addError("To-Do exisitert bereits");
     } else {
       await client.sendCommand([
         "HMSET",
-        "entry:" + entry.todo,
+        entry.todo,
         "Eigentümer",
         entry.owner,
         "Status",
@@ -19,6 +19,7 @@ async function setEntry(entry: CreateEntry): Promise<Info> {
         "Priorität",
         "1",
       ]);
+      await client.SADD("entries", entry.todo);
       return addSuccess("To-Do angelegt");
     }
   } catch (error) {
