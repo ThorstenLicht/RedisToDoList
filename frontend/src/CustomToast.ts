@@ -14,7 +14,7 @@ export const CustomToast = {
       position: "top-left",
       transition: Slide,
       progressClassName: "my-toast-progress-bar",
-      progressStyle: { backgroundColor: "#61dafb" },
+      progressStyle: { backgroundColor: "darkred" },
       style: { backgroundColor: "white", color: "black" },
     }),
   info: (message: string) =>
@@ -29,7 +29,7 @@ export const CustomToast = {
       position: "top-left",
       transition: Slide,
       progressClassName: "my-toast-progress-bar",
-      progressStyle: { backgroundColor: `#61dafb` },
+      progressStyle: { backgroundColor: `darkred` },
       style: { backgroundColor: "white", color: "black" },
     }),
   success: (message: string) =>
@@ -44,7 +44,7 @@ export const CustomToast = {
       position: "top-left",
       transition: Slide,
       progressClassName: "my-toast-progress-bar",
-      progressStyle: { backgroundColor: "#61dafb" },
+      progressStyle: { backgroundColor: "darkred" },
       style: { backgroundColor: "white", color: "black" },
     }),
 };

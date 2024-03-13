@@ -66,11 +66,16 @@ function LogIn() {
     setIsLoading(true);
     if (newPassword1 !== newPassword2) {
       CustomToast.error("Passwörter stimmen nicht überein");
+      setOldPassword("");
       setNewPassword1("");
       setNewPassword2("");
       setIsLoading(false);
     } else {
-      const message = await APIChangePassword(username, newPassword1);
+      const message = await APIChangePassword(
+        username,
+        oldPassword,
+        newPassword1
+      );
       if (message) {
         navigate("/loggedIn/ToDoList");
       }

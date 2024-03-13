@@ -1,11 +1,18 @@
 import { CustomToast } from "../CustomToast";
 import { httpUrl } from "../GlobalURL";
 
-async function APIChangePassword(username: string, password: string) {
+async function APIChangePassword(
+  username: string,
+  oldPassword: string,
+  password: string
+) {
   const Data = {
     username: username,
+    oldPassword: oldPassword,
     password: password,
   };
+
+  console.log(Data);
   try {
     const request = await fetch(`${httpUrl}/user`, {
       method: "PUT",
