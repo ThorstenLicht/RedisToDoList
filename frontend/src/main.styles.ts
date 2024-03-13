@@ -201,10 +201,19 @@ export const LogInContainer = styled.div`
   margin: 20px;
   border-radius: 20px;
   background-color: white;
-  height: 30vh;
+  height: auto;
   width: 30vh;
   position: absolute; // Position auf absolut setzen
   top: 50%; // Obere Kante auf 50% des Containers setzen
   left: 50%; // Linke Kante auf 50% des Containers setzen
   transform: translate(-50%, -50%); // Element zur Mitte verschieben
+
+  p {
+    padding-top: 10px;
+  }
+
+  input {
+    margin-top: 5px;
+    width: 80%;
+  }
 `;

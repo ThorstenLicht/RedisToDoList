@@ -80,8 +80,9 @@ function LogIn() {
 
   if (changePassword) {
     return (
-      <div>
-        <p>Altes Passwort zur Bestätigung</p>
+      <LogInContainer>
+        <h2>Registrierung abschließen</h2>
+        <p>altes Passwort zur Bestätigung</p>
         <input
           type="password"
           placeholder="altes Passwort"
@@ -114,7 +115,7 @@ function LogIn() {
         >
           {isLoading ? "Lädt..." : "Ändern"}
         </button>
-      </div>
+      </LogInContainer>
     );
   } else {
     return (
