@@ -1,12 +1,15 @@
+import "../main.css";
 import { useState } from "react";
 import APILogIn from "../API/APILogIn";
 import { useNavigate } from "react-router-dom";
 import APIChangePassword from "../API/APIChangePassword";
 import { CustomToast } from "../CustomToast";
+import { LogInContainer } from "../main.styles";
 
 function LogIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
   const [newPassword1, setNewPassword1] = useState("");
   const [newPassword2, setNewPassword2] = useState("");
   const [changePassword, setChangePassword] = useState(false);
@@ -14,6 +17,10 @@ function LogIn() {
 
   function handleUsernameChange(input: React.ChangeEvent<HTMLInputElement>) {
     setUsername(input.target.value);
+  }
+
+  function handleOldPasswordChange(input: React.ChangeEvent<HTMLInputElement>) {
+    setOldPassword(input.target.value);
   }
 
   function handlePasswordChange(input: React.ChangeEvent<HTMLInputElement>) {
@@ -54,6 +61,7 @@ function LogIn() {
     setIsLoading(false);
   }
 
+  //hier fehlt noch die Überprüfung des alten Pasworts. Erst wenn dieses richtig ist, dann werden die neuen beiden überprüft und das Passwort wird final abgeändert.
   async function passwordChange() {
     setIsLoading(true);
     if (newPassword1 !== newPassword2) {
@@ -73,11 +81,20 @@ function LogIn() {
   if (changePassword) {
     return (
       <div>
+        <p>Altes Passwort zur Bestätigung</p>
+        <input
+          type="password"
+          placeholder="altes Passwort"
+          title="Gebe hier Dein altes Passwort ein."
+          value={oldPassword}
+          onChange={handleOldPasswordChange}
+        />
+
         <p>Neues Passwort</p>
         <input
           type="password"
-          placeholder="Passwort"
-          title="Geben Sie hier ihr Passwort ein."
+          placeholder="neues Passwort"
+          title="Gebe hier Dein neues Passwort ein."
           value={newPassword1}
           onChange={handleNewPassword1Change}
         />
@@ -85,12 +102,12 @@ function LogIn() {
         <input
           type="password"
           placeholder="Passwort"
-          title="Geben Sie hier ihr Passwort ein."
+          title="Gebe hier erneut Dein neues Passwort ein."
           value={newPassword2}
           onChange={handleNewPassword2Change}
         />
         <button
-          title="Klicken Sie hier um das Passwot zu ändern und sich einzuloggen."
+          title="Klicke hier um Dein Passwort zu ändern und sich einzuloggen."
           onClick={() => passwordChange()}
           disabled={isLoading}
           style={{ cursor: isLoading ? "wait" : "pointer" }}
@@ -101,12 +118,13 @@ function LogIn() {
     );
   } else {
     return (
-      <div>
+      <LogInContainer>
+        <h2>Anmeldung</h2>
         <p>Benutzername</p>
         <input
           type="text"
           placeholder="Benutzername"
-          title="Geben Sie hier ihren Benutzernamen ein."
+          title="Gebe hier Deinen Benutzernamen ein."
           value={username}
           onChange={handleUsernameChange}
         />
@@ -114,19 +132,19 @@ function LogIn() {
         <input
           type="password"
           placeholder="Passwort"
-          title="Geben Sie hier ihr Passwort ein."
+          title="Gebe hier Dein Passwort ein."
           value={password}
           onChange={handlePasswordChange}
         />
         <button
-          title="Klicken Sie hier um sich einzuloggen."
+          title="Klicke hier um Dich einzuloggen."
           onClick={() => handleLogIn()}
           disabled={isLoading}
           style={{ cursor: isLoading ? "wait" : "pointer" }}
         >
           {isLoading ? "Lädt..." : "Anmelden"}
         </button>
-      </div>
+      </LogInContainer>
     );
   }
 }

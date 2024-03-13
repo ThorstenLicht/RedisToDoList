@@ -1,3 +1,4 @@
+import "../main.css";
 import { Outlet, useNavigate } from "react-router-dom";
 import { getCookie } from "../CookieFunctions";
 import useWebSocket from "react-use-websocket";
@@ -6,6 +7,7 @@ import messageController from "../WS/MessageController";
 import { Entry, User } from "../interface";
 import { wsURL } from "../GlobalURL";
 import logOut from "../WS/LogOut";
+import { Header, LoggedInContainer, Welcome } from "../main.styles";
 
 function Websocket(input: {
   entries: Array<Entry>;
@@ -49,13 +51,19 @@ function Websocket(input: {
 
   return (
     <>
-      <p>Willkommen zurück {username}</p>
-      <button
-        title="Klicken Sie hier um sich abzumelden."
-        onClick={() => logOut(sendJsonMessage)}
-      >
-        Abmelden
-      </button>
+      <Header>
+        <p></p>
+        <h1>To-Do Liste mit der Redis Datenbank</h1>
+        <LoggedInContainer>
+          <p>Willkommen zurück {username}</p>
+          <button
+            title="Klicken Sie hier um sich abzumelden."
+            onClick={() => logOut(sendJsonMessage)}
+          >
+            Abmelden
+          </button>
+        </LoggedInContainer>
+      </Header>
       <Outlet />
     </>
   );

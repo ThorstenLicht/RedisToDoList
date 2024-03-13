@@ -1,4 +1,5 @@
 import { InteractionsProps } from "../interface";
+import { SelectionContainer } from "../main.styles";
 
 function Interactions(input: InteractionsProps) {
   const username = sessionStorage.getItem("username");
@@ -23,7 +24,7 @@ function Interactions(input: InteractionsProps) {
   }
 
   return (
-    <div>
+    <SelectionContainer>
       {(input.entry.owner === username || username === "Admin") && (
         <select value={input.entry.status} onChange={changeStatus}>
           <option value="progress">In Arbeit</option>
@@ -38,7 +39,7 @@ function Interactions(input: InteractionsProps) {
           <option value="3">Hohe Priorität</option>
         </select>
       )}
-    </div>
+    </SelectionContainer>
   );
 }
 

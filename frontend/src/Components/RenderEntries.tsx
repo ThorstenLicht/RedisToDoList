@@ -1,16 +1,17 @@
 import { RenderEntriesProps } from "../interface";
 import CountdownEntry from "./CountdownEntry";
 import Interactions from "./Interactions";
+import { ToDoContainer, ToDoGrid } from "../main.styles";
 
 function RenderEntries(input: RenderEntriesProps) {
   if (input.entries.length === 0) {
     return <p>Keine Einträge vorhanden</p>;
   } else {
     return (
-      <div>
+      <ToDoGrid>
         {input.entries.map((entry) => (
-          <div>
-            <h3>{entry.todo}</h3>
+          <ToDoContainer>
+            <h2>{entry.todo}</h2>
             <p>Eigentümer: {entry.owner}</p>
             {entry.remainingTime >= 0 ? (
               <CountdownEntry
@@ -24,9 +25,9 @@ function RenderEntries(input: RenderEntriesProps) {
               entry={entry}
               sendJsonMessage={input.sendJsonMessage}
             />
-          </div>
+          </ToDoContainer>
         ))}
-      </div>
+      </ToDoGrid>
     );
   }
 }

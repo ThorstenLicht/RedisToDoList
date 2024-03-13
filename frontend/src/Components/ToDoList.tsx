@@ -1,3 +1,4 @@
+import "../main.css";
 import useWebSocket from "react-use-websocket";
 import { wsURL } from "../GlobalURL";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +8,7 @@ import NewEntry from "./NewEntry";
 import { getCookie } from "../CookieFunctions";
 import deletePriorities from "../WS/deletePriorities";
 import { useEffect } from "react";
+import { Menu, Content } from "../main.styles";
 
 function ToDoList(input: { entries: Array<Entry>; setEntries: Function }) {
   const navigate = useNavigate();
@@ -48,43 +50,48 @@ function ToDoList(input: { entries: Array<Entry>; setEntries: Function }) {
 
   return (
     <>
-      <h1>ToDoList</h1>
-      <button
-        title="Klicken Sie hier um zur Benutzerverwaltung zu kommen."
-        onClick={() => navigate("/loggedIn/UserManagement")}
-      >
-        Benutzerverwaltung
-      </button>
-      {username === "Admin" && (
+      <Menu>
         <button
-          title="Klicken Sie hier um alle Prioritäten zu löschen."
-          onClick={() => deletePriorities(sendJsonMessage)}
+          title="Klicken Sie hier um zur Benutzerverwaltung zu kommen."
+          onClick={() => navigate("/loggedIn/UserManagement")}
         >
-          Alle Prioritäten löschen
+          Benutzerverwaltung
         </button>
-      )}
-      <NewEntry sendJsonMessage={sendJsonMessage} />
-      <h2>ToDos in Bearbeitung</h2>
-      <RenderEntries
-        entries={entriesProgress}
-        sendJsonMessage={sendJsonMessage}
-        allEntries={input.entries}
-        setEntries={input.setEntries}
-      />
-      <h2>Abgeschlossene ToDos</h2>
-      <RenderEntries
-        entries={entriesCompleted}
-        sendJsonMessage={sendJsonMessage}
-        allEntries={input.entries}
-        setEntries={input.setEntries}
-      />
-      <h2>Entfernte ToDos</h2>
-      <RenderEntries
-        entries={entriesDeleted}
-        sendJsonMessage={sendJsonMessage}
-        allEntries={input.entries}
-        setEntries={input.setEntries}
-      />
+        {username === "Admin" && (
+          <button
+            title="Klicken Sie hier um alle Prioritäten zu löschen."
+            onClick={() => deletePriorities(sendJsonMessage)}
+          >
+            Alle Prioritäten löschen
+          </button>
+        )}
+        <NewEntry sendJsonMessage={sendJsonMessage} />
+      </Menu>
+      <h1>ToDoList</h1>
+
+      <Content>
+        <h2>ToDos in Bearbeitung</h2>
+        <RenderEntries
+          entries={entriesProgress}
+          sendJsonMessage={sendJsonMessage}
+          allEntries={input.entries}
+          setEntries={input.setEntries}
+        />
+        <h2>Abgeschlossene ToDos</h2>
+        <RenderEntries
+          entries={entriesCompleted}
+          sendJsonMessage={sendJsonMessage}
+          allEntries={input.entries}
+          setEntries={input.setEntries}
+        />
+        <h2>Entfernte ToDos</h2>
+        <RenderEntries
+          entries={entriesDeleted}
+          sendJsonMessage={sendJsonMessage}
+          allEntries={input.entries}
+          setEntries={input.setEntries}
+        />
+      </Content>
     </>
   );
 }

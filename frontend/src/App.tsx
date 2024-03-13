@@ -1,3 +1,4 @@
+import "./main.css";
 import { useState } from "react";
 import ErrorComponent from "./Components/ErrorComponent";
 import LogIn from "./Components/LogIn";

@@ -1,3 +1,4 @@
+import "../main.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import APIGetUsers from "../API/APIGetUsers";
@@ -7,6 +8,7 @@ import { wsURL } from "../GlobalURL";
 import { User } from "../interface";
 import UserList from "./UserList";
 import CreateUser from "./CreateUser";
+import { Content, Header, Menu } from "../main.styles";
 
 function UserManagement(input: { users: Array<User>; setUsers: Function }) {
   const navigate = useNavigate();
@@ -36,20 +38,23 @@ function UserManagement(input: { users: Array<User>; setUsers: Function }) {
 
   return (
     <div>
-      <h1>Benutzermanagment</h1>
-
-      <button
-        title="Klicken Sie hier um zur ToDoListe zu kommen."
-        onClick={() => navigate("/loggedIn/ToDoList")}
-      >
-        ToDoListe
-      </button>
-      <UserList
-        users={input.users}
-        setUsers={input.setUsers}
-        sendJsonMessage={sendJsonMessage}
-      />
-      <CreateUser sendJsonMessage={sendJsonMessage} />
+      <Menu>
+        <button
+          title="Klicken Sie hier um zur ToDoListe zu kommen."
+          onClick={() => navigate("/loggedIn/ToDoList")}
+        >
+          To-Do Liste
+        </button>
+      </Menu>
+      <h1>Benutzermanagement</h1>
+      <Content>
+        <UserList
+          users={input.users}
+          setUsers={input.setUsers}
+          sendJsonMessage={sendJsonMessage}
+        />
+        <CreateUser sendJsonMessage={sendJsonMessage} />
+      </Content>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { Trash } from "phosphor-react";
 import { User } from "../interface";
 import CountdownUser from "./CountdownUser";
+import { UserCardContent } from "../main.styles";
 
 function UserCard(input: {
   user: User;
@@ -17,17 +18,9 @@ function UserCard(input: {
   }
 
   return (
-    <div>
-      <h3>{input.user.username}</h3>
-      {input.user.username !== "Admin" ? (
-        <Trash
-          size={30}
-          onClick={() => {
-            handleDeleteUser(input.user.username);
-          }}
-          cursor={"pointer"}
-        />
-      ) : null}
+    <UserCardContent>
+      <h3>Benutzername: {input.user.username}</h3>
+
       {input.user.password ? (
         <p>Einmalpasswort: {input.user.password}</p>
       ) : null}
@@ -39,7 +32,16 @@ function UserCard(input: {
           setUsers={input.setUsers}
         />
       ) : null}
-    </div>
+      {input.user.username !== "Admin" ? (
+        <Trash
+          size={30}
+          onClick={() => {
+            handleDeleteUser(input.user.username);
+          }}
+          cursor={"pointer"}
+        />
+      ) : null}
+    </UserCardContent>
   );
 }
 

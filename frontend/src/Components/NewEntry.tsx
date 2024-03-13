@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NewEntryProps } from "../interface";
 import { CustomToast } from "../CustomToast";
+import { EntryForm } from "../main.styles";
 
 function NewEntry(input: NewEntryProps) {
   const [title, setTitle] = useState("");
@@ -27,24 +28,21 @@ function NewEntry(input: NewEntryProps) {
   }
 
   return (
-    <div>
-      <label>
-        Titel:
-        <input
-          type="text"
-          value={title}
-          placeholder="Titel des ToDo Eintrags"
-          title="Geben sie hier den Titel ihres ToDo's ein"
-          onChange={handleTitleChange}
-        />
-      </label>
+    <EntryForm>
+      <input
+        type="text"
+        value={title}
+        placeholder="Titel des ToDo Eintrags"
+        title="Geben sie hier den Titel ihres ToDo's ein"
+        onChange={handleTitleChange}
+      />
       <button
         title="Klicken Sie hier, um einen ToDo Eintrag zu erstellen"
         onClick={() => NewEntry()}
       >
         ToDo anlegen
       </button>
-    </div>
+    </EntryForm>
   );
 }
 

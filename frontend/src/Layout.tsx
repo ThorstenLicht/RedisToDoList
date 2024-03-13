@@ -1,7 +1,9 @@
+import "./main.css";
 import { ToastContainer } from "react-toastify";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { existsCookie, getCookie } from "./CookieFunctions";
+import { Header } from "./main.styles";
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -28,9 +30,6 @@ const Layout = () => {
 
   return (
     <div>
-      <header>
-        <h1>To-Do-Liste mit Redis</h1>
-      </header>
       <Outlet />
       <ToastContainer />
     </div>

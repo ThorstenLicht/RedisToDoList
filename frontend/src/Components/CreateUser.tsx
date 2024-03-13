@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { UserForm } from "../main.styles";
 
 function CreateUser(input: { sendJsonMessage: Function }) {
   const [username, setUsername] = useState("");
@@ -22,7 +23,7 @@ function CreateUser(input: { sendJsonMessage: Function }) {
   }
 
   return (
-    <>
+    <UserForm>
       <h1>neuen Benutzer anlegen</h1>
       <p>Benutzername</p>
       <input
@@ -43,7 +44,7 @@ function CreateUser(input: { sendJsonMessage: Function }) {
       <button title="Benutzer anlegen" onClick={() => handleCreateUser()}>
         Benutzer anlegen
       </button>
-    </>
+    </UserForm>
   );
 }
 export default CreateUser;
