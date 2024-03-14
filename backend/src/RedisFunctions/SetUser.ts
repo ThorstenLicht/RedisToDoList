@@ -15,9 +15,7 @@ async function setUser(username: string, password: string, admin: string) {
           EX: 3600, //TTL 1 Stunde
           NX: true, //Eindeutiger Schlüssel
         });
-        console.log("Hier1");
         await client.SADD("usersToDo", username);
-        console.log("Hier2");
         return "Nutzer wurde angelegt";
       }
     }

@@ -10,7 +10,7 @@ function messagetypPriority(
     (element) => element.todo === message.todo
   );
   newEntries[index].priority = message.priority;
-  console.log(newEntries[index].priority);
-  setEntries(newEntries);
+  const sortedEntries = [...newEntries].sort((a, b) => b.priority - a.priority);
+  setEntries(sortedEntries);
 }
 export default messagetypPriority;

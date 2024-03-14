@@ -1,5 +1,5 @@
 import "../main.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import APIGetUsers from "../API/APIGetUsers";
 import { getCookie } from "../CookieFunctions";
@@ -9,6 +9,7 @@ import { User } from "../interface";
 import UserList from "./UserList";
 import CreateUser from "./CreateUser";
 import { Content, Header, Menu } from "../main.styles";
+import ChangePassword from "./ChangePassword";
 
 function UserManagement(input: { users: Array<User>; setUsers: Function }) {
   const navigate = useNavigate();
@@ -48,12 +49,17 @@ function UserManagement(input: { users: Array<User>; setUsers: Function }) {
       </Menu>
       <h1>Benutzermanagement</h1>
       <Content>
-        <UserList
-          users={input.users}
-          setUsers={input.setUsers}
-          sendJsonMessage={sendJsonMessage}
-        />
-        <CreateUser sendJsonMessage={sendJsonMessage} />
+        <ChangePassword />
+        {signedInUsername === "Admin" ? (
+          <>
+            <UserList
+              users={input.users}
+              setUsers={input.setUsers}
+              sendJsonMessage={sendJsonMessage}
+            />
+            <CreateUser sendJsonMessage={sendJsonMessage} />
+          </>
+        ) : null}
       </Content>
     </div>
   );
