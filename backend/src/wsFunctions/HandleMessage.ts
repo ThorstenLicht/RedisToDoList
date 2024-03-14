@@ -85,7 +85,10 @@ async function handleMessage(bytes: any, username: string) {
         const resultDeleteUser = await deleteUser(message.username, username);
         const sendDelteUser = JSON.stringify(resultDeleteUser);
         connection.send(sendDelteUser);
-        if (resultDeleteUser.message === "Benutzer gelöscht") {
+        if (
+          resultDeleteUser.message === "Benutzer gelöscht" &&
+          connections[message.username]
+        ) {
           const deadConnection = connections[message.username];
           const sendDeadConnection = message;
           deadConnection.send(JSON.stringify(sendDeadConnection));

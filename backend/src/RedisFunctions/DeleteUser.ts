@@ -15,7 +15,11 @@ async function deleteUser(username: string, admin: string) {
       } else {
         await client.DEL(username);
         await client.SREM("usersToDo", username);
-        await client.DEL("token:" + username);
+        try {
+          await client.DEL("token:" + username);
+        } catch {
+          console.log("Kein Token vorhanden");
+        }
         const sendback = {
           messagetyp: "deleteUserAdminInfo",
           message: "Benutzer gelöscht",

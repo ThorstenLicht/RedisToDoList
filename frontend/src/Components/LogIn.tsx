@@ -9,7 +9,7 @@ import { LogInContainer } from "../main.styles";
 function LogIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [oldPassword, setOldPassword] = useState("");
+  //const [oldPassword, setOldPassword] = useState("");
   const [newPassword1, setNewPassword1] = useState("");
   const [newPassword2, setNewPassword2] = useState("");
   const [changePassword, setChangePassword] = useState(false);
@@ -19,9 +19,9 @@ function LogIn() {
     setUsername(input.target.value);
   }
 
-  function handleOldPasswordChange(input: React.ChangeEvent<HTMLInputElement>) {
-    setOldPassword(input.target.value);
-  }
+  // function handleOldPasswordChange(input: React.ChangeEvent<HTMLInputElement>) {
+  //   setOldPassword(input.target.value);
+  // }
 
   function handlePasswordChange(input: React.ChangeEvent<HTMLInputElement>) {
     setPassword(input.target.value);
@@ -66,17 +66,18 @@ function LogIn() {
     setIsLoading(true);
     if (newPassword1 !== newPassword2) {
       CustomToast.error("Passwörter stimmen nicht überein");
-      setOldPassword("");
+      //setOldPassword("");
       setNewPassword1("");
       setNewPassword2("");
       setIsLoading(false);
     } else {
       const message = await APIChangePassword(
         username,
-        oldPassword,
+        password,
+        //oldPassword,
         newPassword1
       );
-      if (message) {
+      if (message === "Passwort erfolgreich geändert") {
         navigate("/loggedIn/ToDoList");
       }
       setIsLoading(false);
@@ -87,14 +88,14 @@ function LogIn() {
     return (
       <LogInContainer>
         <h2>Registrierung abschließen</h2>
-        <p>altes Passwort zur Bestätigung</p>
+        {/* <p>altes Passwort zur Bestätigung</p>
         <input
           type="password"
           placeholder="altes Passwort"
           title="Gebe hier Dein altes Passwort ein."
           value={oldPassword}
           onChange={handleOldPasswordChange}
-        />
+        /> */}
 
         <p>Neues Passwort</p>
         <input
