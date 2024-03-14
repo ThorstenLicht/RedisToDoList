@@ -27,3 +27,7 @@ export interface InteractionsProps {
 export interface NewEntryProps {
   sendJsonMessage: Function;
 }
+
+export interface AdminExists {
+  adminExists: number;
+}

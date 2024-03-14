@@ -37,6 +37,13 @@ function UserManagement(input: { users: Array<User>; setUsers: Function }) {
     fetchUsers();
   }, []);
 
+  function handleReset(): void {
+    const message = {
+      messagetyp: "reset",
+    };
+    sendJsonMessage(message);
+  }
+
   return (
     <div>
       <Menu>
@@ -58,6 +65,9 @@ function UserManagement(input: { users: Array<User>; setUsers: Function }) {
               sendJsonMessage={sendJsonMessage}
             />
             <CreateUser sendJsonMessage={sendJsonMessage} />
+            <button title="To-Do Liste resetten" onClick={() => handleReset()}>
+              To-Do Liste inklusive Benutzer zurücksetzen
+            </button>
           </>
         ) : null}
       </Content>

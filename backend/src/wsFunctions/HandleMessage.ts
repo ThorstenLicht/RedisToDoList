@@ -5,9 +5,10 @@ import setPriority from "../RedisFunctions/SetPriority";
 import deletePriority from "../RedisFunctions/DeletePriority";
 import getEntries from "../RedisFunctions/GetEntries";
 import logOut from "../RedisFunctions/LogOut";
-import { addError, addInfo } from "../AddMessagetypToString";
+import { addError } from "../AddMessagetypToString";
 import setUser from "../RedisFunctions/SetUser";
 import deleteUser from "../RedisFunctions/DeleteUser";
+import reset from "../RedisFunctions/Reset";
 
 function broadcast(message: any) {
   Object.keys(connections).forEach((username) => {
@@ -93,6 +94,22 @@ async function handleMessage(bytes: any, username: string) {
           const sendDeadConnection = message;
           deadConnection.send(JSON.stringify(sendDeadConnection));
           deadConnection.close();
+        }
+        break;
+      case "reset": //reset database with all entries and user
+        const resultReset = await reset(username);
+        const sendReset = JSON.stringify(resultReset);
+        if (
+          resultReset.message ===
+          "To-Do Liste inklusive Benutzer wurde vom Admin gelöscht"
+        ) {
+          Object.keys(connections).forEach((username) => {
+            const connection = connections[username];
+            connection.send(sendReset);
+            connection.close();
+          });
+        } else {
+          connection.send(sendReset);
         }
         break;
       default:

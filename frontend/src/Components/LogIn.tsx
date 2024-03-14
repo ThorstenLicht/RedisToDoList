@@ -1,10 +1,12 @@
 import "../main.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import APILogIn from "../API/APILogIn";
 import { useNavigate } from "react-router-dom";
 import APIChangePassword from "../API/APIChangePassword";
 import { CustomToast } from "../CustomToast";
 import { LogInContainer } from "../main.styles";
+import APICreateAdmin from "../API/APICreateAdmin";
+import APIExistsAdmin from "../API/AdminExists";
 
 function LogIn() {
   const [username, setUsername] = useState("");
@@ -12,7 +14,18 @@ function LogIn() {
   const [newPassword1, setNewPassword1] = useState("");
   const [newPassword2, setNewPassword2] = useState("");
   const [changePassword, setChangePassword] = useState(false);
+  const [adminNotExists, setAdminNotExists] = useState(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await APIExistsAdmin();
+      if (!result) {
+        setAdminNotExists(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   function handleUsernameChange(input: React.ChangeEvent<HTMLInputElement>) {
     setUsername(input.target.value);
@@ -36,7 +49,7 @@ function LogIn() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  async function handleLogIn() {
+  async function handleLogIn(username: string, password: string) {
     setIsLoading(true);
     const message = await APILogIn(username, password);
     if (message) {
@@ -69,6 +82,16 @@ function LogIn() {
         navigate("/loggedIn/ToDoList");
       }
       setIsLoading(false);
+    }
+  }
+
+  async function handleCreateAdmin() {
+    const message = await APICreateAdmin();
+    if (message) {
+      CustomToast.success(message);
+      setPassword("root");
+      setUsername("Admin");
+      handleLogIn("Admin", "root");
     }
   }
 
@@ -124,12 +147,22 @@ function LogIn() {
         />
         <button
           title="Klicke hier um Dich einzuloggen."
-          onClick={() => handleLogIn()}
+          onClick={() => handleLogIn(username, password)}
           disabled={isLoading}
           style={{ cursor: isLoading ? "wait" : "pointer" }}
         >
           {isLoading ? "Lädt..." : "Anmelden"}
         </button>
+        {!adminNotExists ? null : (
+          <button
+            title="Klicke hier um einen Admin anzulegen."
+            onClick={() => handleCreateAdmin()}
+            disabled={isLoading}
+            style={{ cursor: isLoading ? "wait" : "pointer" }}
+          >
+            {isLoading ? "Lädt..." : "Admin erstellen"}
+          </button>
+        )}
       </LogInContainer>
     );
   }
