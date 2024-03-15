@@ -56,10 +56,10 @@ function LogIn() {
       sessionStorage.setItem("username", username);
       document.cookie = `username${username}=${username}; expires=${new Date(
         Date.now() + 24 * 60 * 60 * 1000
-      ).toUTCString()}`;
+      ).toUTCString()}; path=/`;
       document.cookie = `token${username}=${message.token}; expires=${new Date(
         Date.now() + 24 * 60 * 60 * 1000
-      ).toUTCString()}`;
+      ).toUTCString()}; path=/`;
       if (message.status === "Erfolgreich angemeldet") {
         navigate("/loggedIn/ToDoList");
       } else {

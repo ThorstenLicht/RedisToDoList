@@ -9,17 +9,18 @@ async function setEntry(entry: CreateEntry): Promise<Info> {
     if (todoExists === 1) {
       return addError("To-Do exisitert bereits");
     } else {
-      await client.sendCommand([
-        "HMSET",
-        entry.todo,
-        "Eigentümer",
-        entry.owner,
-        "Status",
-        "progress",
-        "Priorität",
-        "1",
-      ]);
-      await client.SADD("entries", entry.todo);
+      await client
+        .multi()
+        .hSet(entry.todo, [
+          "Eigentümer",
+          entry.owner,
+          "Status",
+          "progress",
+          "Priorität",
+          "1",
+        ])
+        .SADD("entries", entry.todo)
+        .exec();
       return addSuccess("To-Do angelegt");
     }
   } catch (error) {

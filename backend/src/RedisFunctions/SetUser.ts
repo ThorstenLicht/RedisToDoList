@@ -11,11 +11,14 @@ async function setUser(username: string, password: string, admin: string) {
       if (usernameExists === 1) {
         return addError("Benutzer exisitert bereits");
       } else {
-        await client.set(username, password, {
-          EX: 3600, //TTL 1 Stunde
-          NX: true, //Eindeutiger Schlüssel
-        });
-        await client.SADD("usersToDo", username);
+        await client
+          .multi()
+          .set(username, password, {
+            EX: 3600, //TTL 1 Stunde
+            NX: true, //Eindeutiger Schlüssel
+          })
+          .SADD("usersToDo", username)
+          .exec();
         return "Nutzer wurde angelegt";
       }
     }

@@ -13,8 +13,7 @@ async function deleteUser(username: string, admin: string) {
       if (usernameExists !== 1) {
         return addError("Benutzer existiert nicht");
       } else {
-        await client.DEL(username);
-        await client.SREM("usersToDo", username);
+        await client.multi().DEL(username).SREM("usersToDo", username).exec(); //Transaction with two commands
         try {
           await client.DEL("token:" + username);
         } catch {
