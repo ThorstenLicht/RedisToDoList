@@ -1,6 +1,7 @@
 import { CustomToast } from "../CustomToast";
 import { Entry, User } from "../interface";
 import changePasswordAdminInfo from "./ChangePasswordAdminInfo";
+import messagetypDeleteEntry from "./MessagetypDeleteEntry";
 import messagetypDeleteUserAdminInfo from "./MessagetypDeleteUserAdminInfo";
 import messagetypDeleteUser from "./MessagetypDelteUser";
 import messagetypEntries from "./MessagetypEntries";
@@ -8,6 +9,7 @@ import messagetypNew from "./MessagetypNew";
 import messagetypPriority from "./MessagetypPriority";
 import messagetypSetUser from "./MessagetypSetUser";
 import messagetypStatus from "./MessagetypStatus";
+import messagetypUpdateTitle from "./MessagetypUpdateTitle";
 
 function messageController(
   message: any,
@@ -51,6 +53,19 @@ function messageController(
     }
     case "deleteUser": {
       messagetypDeleteUser(message.username);
+      break;
+    }
+    case "updateTitle": {
+      messagetypUpdateTitle(
+        message.oldTitle,
+        message.newTitle,
+        entries,
+        setEntries
+      );
+      break;
+    }
+    case "deleteEntry": {
+      messagetypDeleteEntry(message.title, entries, setEntries);
       break;
     }
     case "deleteUserAdminInfo": {

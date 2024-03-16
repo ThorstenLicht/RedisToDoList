@@ -9,6 +9,8 @@ import { addError } from "../AddMessagetypToString";
 import setUser from "../RedisFunctions/SetUser";
 import deleteUser from "../RedisFunctions/DeleteUser";
 import reset from "../RedisFunctions/Reset";
+import updateTitle from "../RedisFunctions/UpdateTitle";
+import deleteEntry from "../RedisFunctions/DeleteEntry";
 
 function broadcast(message: any) {
   Object.keys(connections).forEach((username) => {
@@ -80,6 +82,30 @@ async function handleMessage(bytes: any, username: string) {
           connection.send(JSON.stringify(message));
         } else {
           connection.send(sendSetUser);
+        }
+        break;
+      case "updateTitle": //update Title
+        const resultUpdateTitle = await updateTitle(
+          message.newTitle,
+          message.oldTitle,
+          username
+        );
+        const sendUpdateTitle = JSON.stringify(resultUpdateTitle);
+        if (resultUpdateTitle.message === "Eintrag wurde geupdated") {
+          connection.send(sendUpdateTitle);
+          broadcast(message);
+        } else {
+          connection.send(sendUpdateTitle);
+        }
+        break;
+      case "deleteEntry": //delete entry
+        const resultdeleteEntry = await deleteEntry(message.title, username);
+        const senddeleteEntry = JSON.stringify(resultdeleteEntry);
+        if (resultdeleteEntry.message === "Eintrag wurde gelöscht") {
+          connection.send(senddeleteEntry);
+          broadcast(message);
+        } else {
+          connection.send(senddeleteEntry);
         }
         break;
       case "deleteUser": //delete User

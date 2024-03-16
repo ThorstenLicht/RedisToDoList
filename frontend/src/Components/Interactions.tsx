@@ -1,7 +1,12 @@
+import { Pencil, Trash } from "phosphor-react";
 import { InteractionsProps } from "../interface";
 import { SelectionContainer } from "../main.styles";
+import { useState } from "react";
+import { CustomToast } from "../CustomToast";
 
 function Interactions(input: InteractionsProps) {
+  const [updatefield, setUpdatefield] = useState(false);
+  const [newTitle, setNewTitle] = useState(input.entry.todo);
   const username = sessionStorage.getItem("username");
   function changeStatus(event: React.ChangeEvent<HTMLSelectElement>) {
     const newStatus = event.target.value;
@@ -23,6 +28,34 @@ function Interactions(input: InteractionsProps) {
     input.sendJsonMessage(send);
   }
 
+  function handleVisible() {
+    setUpdatefield(!updatefield);
+  }
+  function handleUpdate() {
+    if (newTitle !== input.entry.todo) {
+      const send = {
+        messagetyp: "updateTitle",
+        oldTitle: input.entry.todo,
+        newTitle: newTitle,
+      };
+      input.sendJsonMessage(send);
+      setUpdatefield(false);
+    } else {
+      CustomToast.error("Der Titel ist identisch mit dem alten Titel.");
+    }
+  }
+  function handleDelete() {
+    const send = {
+      messagetyp: "deleteEntry",
+      title: input.entry.todo,
+    };
+    input.sendJsonMessage(send);
+  }
+
+  function handleTodoChange(input: React.ChangeEvent<HTMLInputElement>) {
+    setNewTitle(input.target.value);
+  }
+
   return (
     <SelectionContainer>
       {(input.entry.owner === username || username === "Admin") && (
@@ -38,6 +71,24 @@ function Interactions(input: InteractionsProps) {
           <option value="2">Mittlere Priorität</option>
           <option value="3">Hohe Priorität</option>
         </select>
+      )}
+      {(input.entry.owner === username || username === "Admin") && (
+        <Pencil size={24} cursor={"pointer"} onClick={handleVisible} />
+      )}
+      {updatefield && (
+        <>
+          <input
+            type="text"
+            placeholder="Neuer Titel"
+            title="Gebe hier Deinen neuen Titel ein."
+            value={newTitle}
+            onChange={handleTodoChange}
+          />
+          <button onClick={handleUpdate}>Speichern</button>
+        </>
+      )}
+      {username === "Admin" && (
+        <Trash size={24} cursor={"pointer"} onClick={handleDelete} />
       )}
     </SelectionContainer>
   );

@@ -13,11 +13,16 @@ async function deleteUser(username: string, admin: string) {
       if (usernameExists !== 1) {
         return addError("Benutzer existiert nicht");
       } else {
-        await client.multi().DEL(username).SREM("usersToDo", username).exec(); //Transaction with two commands
-        try {
-          await client.DEL("token:" + username);
-        } catch {
-          console.log("Kein Token vorhanden");
+        const existsToken = await client.exists("token:" + username);
+        if (existsToken !== 1) {
+          await client.multi().DEL(username).SREM("usersToDo", username).exec(); //Transaction with two commands
+        } else {
+          await client
+            .multi()
+            .DEL(username)
+            .SREM("usersToDo", username)
+            .DEL("token:" + username)
+            .exec(); //Transaction with three commands
         }
         const sendback = {
           messagetyp: "deleteUserAdminInfo",

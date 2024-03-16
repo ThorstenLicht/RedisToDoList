@@ -13,7 +13,7 @@ function messagetypStatus(
   if (message.status === "progress") {
     newEntries[index].remainingTime = -1;
   } else {
-    newEntries[index].remainingTime = 60;
+    newEntries[index].remainingTime = 3600;
   }
   setEntries(newEntries);
 }
