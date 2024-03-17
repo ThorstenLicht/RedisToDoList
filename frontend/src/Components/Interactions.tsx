@@ -73,7 +73,12 @@ function Interactions(input: InteractionsProps) {
         </select>
       )}
       {(input.entry.owner === username || username === "admin@admin.com") && (
-        <Pencil size={24} cursor={"pointer"} onClick={handleVisible} />
+        <Pencil
+          size={24}
+          color={"white"}
+          cursor={"pointer"}
+          onClick={handleVisible}
+        />
       )}
       {updatefield && (
         <>
@@ -88,7 +93,12 @@ function Interactions(input: InteractionsProps) {
         </>
       )}
       {username === "admin@admin.com" && (
-        <Trash size={24} cursor={"pointer"} onClick={handleDelete} />
+        <Trash
+          size={24}
+          color={"white"}
+          cursor={"pointer"}
+          onClick={handleDelete}
+        />
       )}
     </SelectionContainer>
   );

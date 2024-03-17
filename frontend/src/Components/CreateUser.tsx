@@ -27,11 +27,12 @@ function CreateUser(input: { sendJsonMessage: Function }) {
       <h1>neuen Benutzer anlegen</h1>
       <p>Benutzername</p>
       <input
-        type="text"
+        type="email"
         placeholder="Benutzername"
         title="Geben Sie hier ihren Benutzernamen ein."
         value={username}
         onChange={handleUsernameChange}
+        required
       />
       <p>Passwort</p>
       <input

@@ -18,8 +18,8 @@ export const ToDoContainer = styled.div`
   padding: 10px;
   margin: 10px;
   background-color: darkred;
-  width: 25vh;
-  height: 20vh;
+  width: 350px;
+  height: auto;
 
   h2 {
     color: white;
@@ -32,9 +32,12 @@ export const ToDoContainer = styled.div`
 `;
 export const ToDoGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
   gap: 20px;
   justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 95vw;
 `;
 
 export const Header = styled.div`
@@ -81,6 +84,11 @@ export const Menu = styled.div`
   margin: 20px;
   border-radius: 20px;
   background-color: white;
+  width: 95vw;
+
+  @media (max-width: 910px) {
+    flex-direction: column;
+  }
 `;
 
 export const ButtonContainer = styled.div`
@@ -135,10 +143,12 @@ export const Content = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  align-self: center;
   padding: 20px;
   margin: 20px;
   border-radius: 20px;
   background-color: white;
+  width: 95vw;
 `;
 
 export const EntryForm = styled.div`
@@ -150,6 +160,10 @@ export const EntryForm = styled.div`
   margin: 20px;
   border-radius: 20px;
   background-color: #f8f8f8;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
 `;
 
 export const UserArray = styled.div`
@@ -158,6 +172,10 @@ export const UserArray = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
 `;
 
 export const UserCardContent = styled.div`
@@ -172,7 +190,7 @@ export const UserCardContent = styled.div`
   margin: 20px;
   border-radius: 20px;
   background-color: darkred;
-  width: 80vh;
+  width: 90%;
 
   p {
     color: white;
@@ -182,6 +200,18 @@ export const UserCardContent = styled.div`
     color: white;
     margin: 20px;
   }
+
+  @media (max-width: 800px) {
+    grid-template-columns: 1fr 1fr;
+    flex-direction: column;
+    justify-items: center;
+  }
+
+  @media (max-width: 500px) {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+    justify-items: center;
+  }
 `;
 
 export const LoggedInContainer = styled.div`
@@ -190,6 +220,10 @@ export const LoggedInContainer = styled.div`
   align-items: center;
   justify-content: right;
   width: 95%;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 export const LogInContainer = styled.div`
