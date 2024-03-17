@@ -3,7 +3,7 @@ import { getClient } from "../GetClient";
 
 async function reset(username: string) {
   try {
-    if (username !== "Admin") {
+    if (username !== "admin@admin.com") {
       return addError("Keine Berechtigung");
     } else {
       const client = await getClient();

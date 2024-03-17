@@ -57,7 +57,7 @@ function ToDoList(input: { entries: Array<Entry>; setEntries: Function }) {
         >
           Benutzerverwaltung
         </button>
-        {username === "Admin" && (
+        {username === "admin@admin.com" && (
           <button
             title="Klicken Sie hier um alle Prioritäten zu löschen."
             onClick={() => deletePriorities(sendJsonMessage)}

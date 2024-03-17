@@ -3,7 +3,7 @@ import { getClient } from "../GetClient";
 
 async function setUser(username: string, password: string, admin: string) {
   try {
-    if (admin !== "Admin") {
+    if (admin !== "admin@admin.com") {
       return addError("Sie sind nicht berechtigt, diese Funktion zu nutzen.");
     } else {
       const client = await getClient();

@@ -57,7 +57,7 @@ function UserManagement(input: { users: Array<User>; setUsers: Function }) {
       <h1>Benutzermanagement</h1>
       <Content>
         <ChangePassword />
-        {signedInUsername === "Admin" ? (
+        {signedInUsername === "admin@admin.com" ? (
           <>
             <UserList
               users={input.users}

@@ -5,7 +5,7 @@ import setPriority from "./SetPriority";
 
 async function deletePriority(username: string): Promise<Info> {
   try {
-    if (username !== "Admin") {
+    if (username !== "admin@admin.com") {
       return addError("Sie sind nicht berechtigt");
     } else {
       const fullData = await getEntries();

@@ -58,7 +58,7 @@ function Interactions(input: InteractionsProps) {
 
   return (
     <SelectionContainer>
-      {(input.entry.owner === username || username === "Admin") && (
+      {(input.entry.owner === username || username === "admin@admin.com") && (
         <select value={input.entry.status} onChange={changeStatus}>
           <option value="progress">In Arbeit</option>
           <option value="completed">Abgschlossen</option>
@@ -72,7 +72,7 @@ function Interactions(input: InteractionsProps) {
           <option value="3">Hohe Priorität</option>
         </select>
       )}
-      {(input.entry.owner === username || username === "Admin") && (
+      {(input.entry.owner === username || username === "admin@admin.com") && (
         <Pencil size={24} cursor={"pointer"} onClick={handleVisible} />
       )}
       {updatefield && (
@@ -87,7 +87,7 @@ function Interactions(input: InteractionsProps) {
           <button onClick={handleUpdate}>Speichern</button>
         </>
       )}
-      {username === "Admin" && (
+      {username === "admin@admin.com" && (
         <Trash size={24} cursor={"pointer"} onClick={handleDelete} />
       )}
     </SelectionContainer>

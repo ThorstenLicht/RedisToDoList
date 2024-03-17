@@ -90,8 +90,8 @@ function LogIn() {
     if (message) {
       CustomToast.success(message);
       setPassword("root");
-      setUsername("Admin");
-      handleLogIn("Admin", "root");
+      setUsername("admin@admin.com");
+      handleLogIn("admin@admin.com", "root");
     }
   }
 

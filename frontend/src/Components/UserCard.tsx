@@ -32,7 +32,7 @@ function UserCard(input: {
           setUsers={input.setUsers}
         />
       ) : null}
-      {input.user.username !== "Admin" ? (
+      {input.user.username !== "admin@admin.com" ? (
         <Trash
           size={30}
           onClick={() => {

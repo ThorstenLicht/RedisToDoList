@@ -1,9 +1,9 @@
 import { addError, addSuccess } from "../AddMessagetypToString";
 import { getClient } from "../GetClient";
 
-async function deleteEntry(title: string, admin: string) {
+async function deleteEntry(title: string, username: string) {
   try {
-    if (admin !== "Admin") {
+    if (username !== "admin@admin.com") {
       return addError("Nicht autorisiert");
     } else {
       const client = await getClient();

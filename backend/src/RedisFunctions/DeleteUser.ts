@@ -3,10 +3,10 @@ import { getClient } from "../GetClient";
 
 async function deleteUser(username: string, admin: string) {
   try {
-    if (admin !== "Admin") {
+    if (admin !== "admin@admin.com") {
       return addError("Nicht autorisiert");
-    } else if (username === "Admin") {
-      return addError("Admin kann nicht gelöscht werden");
+    } else if (username === "admin@admin.com") {
+      return addError("admin@admin.com kann nicht gelöscht werden");
     } else {
       const client = await getClient();
       const usernameExists = await client.exists(username);

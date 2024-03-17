@@ -4,7 +4,7 @@ import { Response } from "express";
 async function existsAdmin(res: Response) {
   try {
     const client = await getClient();
-    const adminExists = await client.exists("Admin");
+    const adminExists = await client.exists("admin@admin.com");
     res.status(200).json({ adminExists: adminExists });
   } catch (error) {
     console.error("Error:", error);

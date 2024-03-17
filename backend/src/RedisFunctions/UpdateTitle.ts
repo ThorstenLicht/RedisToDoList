@@ -8,7 +8,7 @@ async function updateTitle(newTitle: string, oldTitle: string, owner: string) {
     if (entry === null) {
       return addError("Eintrag existiert nicht");
     } else {
-      if (owner !== entry.Eigentümer && owner !== "Admin") {
+      if (owner !== entry.Eigentümer && owner !== "admin@admin.com") {
         return addError("Nicht autorisiert");
       } else {
         await client
