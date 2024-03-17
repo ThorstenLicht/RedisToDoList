@@ -20,7 +20,7 @@ controller.get("/user", (req: Request, res: Response) => {
 });
 
 controller.post("/user", async (req: Request, res: Response) => {
-  const response = await setUser("Admin", "root", "Admin");
+  const response = await setUser("admin@admin.com", "root", "admin@admin.com");
   if (response === "Nutzer wurde angelegt") {
     res.status(200).send("Admin wurde angelegt");
   } else {
