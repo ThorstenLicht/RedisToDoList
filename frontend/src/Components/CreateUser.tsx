@@ -18,8 +18,9 @@ function CreateUser(input: { sendJsonMessage: Function }) {
       messagetyp: "setUser",
       logInData: { username: username, password: password },
     };
-    console.log(message);
     input.sendJsonMessage(message);
+    setUsername("");
+    setPassword("");
   }
 
   return (
