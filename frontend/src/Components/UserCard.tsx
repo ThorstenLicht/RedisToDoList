@@ -35,6 +35,7 @@ function UserCard(input: {
       {input.user.username !== "admin@admin.com" ? (
         <Trash
           size={30}
+          color={"white"}
           onClick={() => {
             handleDeleteUser(input.user.username);
           }}

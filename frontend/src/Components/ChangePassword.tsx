@@ -49,7 +49,7 @@ function ChangePassword() {
 
   return (
     <div>
-      <h1>Password ändern</h1>
+      <h1>Passwort ändern</h1>
       <p>Altes Passwort zur Bestätigung</p>
       <input
         type="password"
