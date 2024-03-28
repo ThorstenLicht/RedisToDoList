@@ -26,3 +26,7 @@ Phase 2: Backend and Frontend
    a. cd .\backend\
    b. npm i
    c. npm start
+
+redis collections:
+http: https://orange-capsule-481991.postman.co/workspace/Redis~2307c415-17ab-46a9-8da2-29d9356b4270/collection/33275456-4ae7e10e-7faa-4163-8412-285dd5b272cc?action=share&creator=33275456
+ws: https://orange-capsule-481991.postman.co/workspace/Redis~2307c415-17ab-46a9-8da2-29d9356b4270/collection/65e304eb5f2e5c765c5517fc?action=share&creator=33275456
