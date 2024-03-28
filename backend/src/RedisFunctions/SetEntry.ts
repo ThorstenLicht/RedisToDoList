@@ -9,19 +9,23 @@ async function setEntry(entry: CreateEntry): Promise<Info> {
     if (todoExists === 1) {
       return addError("To-Do exisitert bereits");
     } else {
-      await client
-        .multi()
-        .hSet(entry.todo, [
-          "Eigentümer",
-          entry.owner,
-          "Status",
-          "progress",
-          "Priorität",
-          "1",
-        ])
-        .SADD("entries", entry.todo)
-        .exec();
-      return addSuccess("To-Do angelegt");
+      if (entry.todo.includes("@")) {
+        return addError("Das @-Zeichen ist nicht erlaubt");
+      } else {
+        await client
+          .multi()
+          .hSet(entry.todo, [
+            "Eigentümer",
+            entry.owner,
+            "Status",
+            "progress",
+            "Priorität",
+            "1",
+          ])
+          .SADD("entries", entry.todo)
+          .exec();
+        return addSuccess("To-Do angelegt");
+      }
     }
   } catch (error) {
     console.error("Error:", error);

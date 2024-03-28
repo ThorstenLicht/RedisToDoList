@@ -11,21 +11,25 @@ async function updateTitle(newTitle: string, oldTitle: string, owner: string) {
       if (owner !== entry.Eigentümer && owner !== "admin@admin.com") {
         return addError("Nicht autorisiert");
       } else {
-        await client
-          .multi()
-          .DEL(oldTitle)
-          .SREM("entries", oldTitle)
-          .HSET(newTitle, [
-            "Eigentümer",
-            owner,
-            "Status",
-            entry.Status,
-            "Priorität",
-            entry.Priorität,
-          ])
-          .SADD("entries", newTitle)
-          .exec();
-        return addSuccess("Eintrag wurde geupdated");
+        if (newTitle.includes("@")) {
+          return addError("Das @-Zeichen ist nicht erlaubt");
+        } else {
+          await client
+            .multi()
+            .DEL(oldTitle)
+            .SREM("entries", oldTitle)
+            .HSET(newTitle, [
+              "Eigentümer",
+              entry.Eigentümer,
+              "Status",
+              entry.Status,
+              "Priorität",
+              entry.Priorität,
+            ])
+            .SADD("entries", newTitle)
+            .exec();
+          return addSuccess("Eintrag wurde geupdated");
+        }
       }
     }
   } catch (error) {
