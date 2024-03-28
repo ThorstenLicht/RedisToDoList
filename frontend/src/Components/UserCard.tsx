@@ -19,7 +19,7 @@ function UserCard(input: {
 
   return (
     <UserCardContent>
-      <h3>Benutzername: {input.user.username}</h3>
+      <h3>E-Mail: {input.user.username}</h3>
 
       {input.user.password ? (
         <p>Einmalpasswort: {input.user.password}</p>

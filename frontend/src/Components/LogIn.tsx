@@ -131,11 +131,11 @@ function LogIn() {
     return (
       <LogInContainer>
         <h2>Anmeldung</h2>
-        <p>Benutzername</p>
+        <p>E-Mail</p>
         <input
           type="text"
-          placeholder="Benutzername"
-          title="Gebe hier Deinen Benutzernamen ein."
+          placeholder="E-Mail"
+          title="Gebe hier Deine E-Mail ein."
           value={username}
           onChange={handleUsernameChange}
         />

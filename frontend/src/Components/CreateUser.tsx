@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { UserForm } from "../main.styles";
+import { CustomToast } from "../CustomToast";
 
 function CreateUser(input: { sendJsonMessage: Function }) {
   const [username, setUsername] = useState("");
@@ -14,13 +15,20 @@ function CreateUser(input: { sendJsonMessage: Function }) {
   }
 
   function handleCreateUser() {
-    const message = {
-      messagetyp: "setUser",
-      logInData: { username: username, password: password },
-    };
-    input.sendJsonMessage(message);
-    setUsername("");
-    setPassword("");
+    const emailRegEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegEx.test(username)) {
+      console.error("Ungültige E-Mail-Adresse");
+      CustomToast.error("Ungültige E-Mail-Adresse");
+    } else {
+      const message = {
+        messagetyp: "setUser",
+        logInData: { username: username, password: password },
+      };
+      input.sendJsonMessage(message);
+      setUsername("");
+      setPassword("");
+    }
   }
 
   return (
@@ -28,9 +36,9 @@ function CreateUser(input: { sendJsonMessage: Function }) {
       <h1>neuen Benutzer anlegen</h1>
       <p>Benutzername</p>
       <input
-        type="email"
-        placeholder="Benutzername"
-        title="Geben Sie hier ihren Benutzernamen ein."
+        type="text"
+        placeholder="E-Mail"
+        title="Gebe hier die E-Mail ein."
         value={username}
         onChange={handleUsernameChange}
         required
@@ -39,7 +47,7 @@ function CreateUser(input: { sendJsonMessage: Function }) {
       <input
         type="text"
         placeholder="Einmalpasswort"
-        title="Geben Sie hier ihr Passwort ein."
+        title="Gebe hier ein Passwort ein."
         value={password}
         onChange={handlePasswordChange}
       />
