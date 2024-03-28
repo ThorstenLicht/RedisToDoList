@@ -6,7 +6,7 @@ import ws from "ws";
 import handleMessage from "./wsFunctions/HandleMessage";
 import handleClose from "./wsFunctions/HandleClose";
 import { ConnectionMap } from "./interface";
-//import entriesAfterLogIn from "./wsFunctions/EntriesAfterLogIn";
+import entriesAfterLogIn from "./wsFunctions/EntriesAfterLogIn";
 import { getClient } from "./GetClient";
 import { addError } from "./AddMessagetypToString";
 
@@ -36,7 +36,7 @@ wsServer.on("connection", async (connection, request) => {
         const savedToken = await client.get("token:" + username);
         if (savedToken === token) {
           console.log(`User connected: ${username} with token: ${token}`);
-          //entriesAfterLogIn(connection);
+          entriesAfterLogIn(connection);
           connection.on("message", (message) =>
             handleMessage(message, username)
           );
