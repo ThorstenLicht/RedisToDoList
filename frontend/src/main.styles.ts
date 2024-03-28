@@ -180,11 +180,11 @@ export const UserArray = styled.div`
 
 export const UserCardContent = styled.div`
   display: grid;
-  grid-template-columns: 31% 31% 31% 7%;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   flex-direction: row;
   align-items: center;
   justify-items: left;
-  justify-content: left;
+  justify-content: center;
   text-align: left;
   padding: 10px;
   margin: 20px;
@@ -205,12 +205,14 @@ export const UserCardContent = styled.div`
     grid-template-columns: 1fr 1fr;
     flex-direction: column;
     justify-items: center;
+    width: 95%;
   }
 
   @media (max-width: 500px) {
     grid-template-columns: 1fr;
     flex-direction: column;
     justify-items: center;
+    width: 95%;
   }
 `;
 
