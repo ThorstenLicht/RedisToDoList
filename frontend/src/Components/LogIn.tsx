@@ -65,10 +65,11 @@ function LogIn() {
       } else {
         setChangePassword(true);
       }
+    } else {
+      setUsername("");
+      setPassword("");
     }
     setIsLoading(false);
-    setUsername("");
-    setPassword("");
   }
 
   async function passwordChange() {
