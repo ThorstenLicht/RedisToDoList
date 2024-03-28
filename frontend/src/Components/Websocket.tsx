@@ -42,12 +42,19 @@ function Websocket(input: {
     }
   }, [lastJsonMessage]);
 
-  //if connection is lost, redirect to login page
+  //if connection is lost redirect to login page
   useEffect(() => {
-    if (username === "" || token === "" || readyState === 3) {
+    if (readyState === 3) {
       navigate("/");
     }
-  }, [username, token, readyState]);
+  }, [readyState]);
+
+  //if user is not logged in redirect to login page
+  useEffect(() => {
+    if (username === "" || token === "") {
+      navigate("/");
+    }
+  }, [username, token]);
 
   return (
     <>
