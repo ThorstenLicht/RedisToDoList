@@ -1,12 +1,8 @@
-import { User } from "../interface";
+import { User, UserListProps } from "../interface";
 import { UserArray } from "../main.styles";
 import UserCard from "./UserCard";
 
-function UserList(input: {
-  users: Array<User>;
-  setUsers: Function;
-  sendJsonMessage: Function;
-}) {
+function UserList(input: UserListProps) {
   if (input.users.length === 0) {
     return (
       <>

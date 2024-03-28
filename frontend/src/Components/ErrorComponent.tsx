@@ -1,7 +1,7 @@
 import "../main.css";
 
 function ErrorComponent() {
-  return <p>ErrorComponent</p>;
+  return <p>Die URL existiert leider nicht</p>;
 }
 
 export default ErrorComponent;

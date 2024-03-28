@@ -1,14 +1,9 @@
 import { Trash } from "phosphor-react";
-import { User } from "../interface";
+import { UserCardProps } from "../interface";
 import CountdownUser from "./CountdownUser";
 import { UserCardContent } from "../main.styles";
 
-function UserCard(input: {
-  user: User;
-  setUsers: Function;
-  users: Array<User>;
-  sendJsonMessage: Function;
-}) {
+function UserCard(input: UserCardProps) {
   function handleDeleteUser(username: string) {
     const send = {
       messagetyp: "deleteUser",

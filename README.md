@@ -14,8 +14,6 @@ Phase 1: Redis Container:
 8. Host: redis, Port: 6379, Name: redis-local, others: empty
 9. Add Redis Database
 
-Um die Datenbank zu öffnen auf die Kachel "redis-local" klicken, am linken Rand kann CLI ausgewählt werden um Befhele eingeben zu können.
-
 Phase 2: Backend and Frontend
 
 1. go in a terminal to the folder RedisToDoList

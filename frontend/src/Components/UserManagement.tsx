@@ -5,13 +5,13 @@ import APIGetUsers from "../API/APIGetUsers";
 import { getCookie } from "../CookieFunctions";
 import useWebSocket from "react-use-websocket";
 import { wsURL } from "../GlobalURL";
-import { User } from "../interface";
+import { UserManagementProps } from "../interface";
 import UserList from "./UserList";
 import CreateUser from "./CreateUser";
 import { Content, Header, Menu } from "../main.styles";
 import ChangePassword from "./ChangePassword";
 
-function UserManagement(input: { users: Array<User>; setUsers: Function }) {
+function UserManagement(input: UserManagementProps) {
   const navigate = useNavigate();
 
   let signedInUsername = sessionStorage.getItem("username");

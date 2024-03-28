@@ -1,13 +1,8 @@
 import { useState, useEffect } from "react";
-import { Entry } from "../interface";
+import { CountdownEntryProps } from "../interface";
 import formatSeconds from "../FormatSeconds";
 
-function CountdownEntry(input: {
-  startCount: number;
-  allEntries: Array<Entry>;
-  entry: Entry;
-  setEntries: Function;
-}) {
+function CountdownEntry(input: CountdownEntryProps) {
   const [count, setCount] = useState(input.startCount);
 
   useEffect(() => {

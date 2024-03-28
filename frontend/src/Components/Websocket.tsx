@@ -4,17 +4,12 @@ import { getCookie } from "../CookieFunctions";
 import useWebSocket from "react-use-websocket";
 import { useEffect } from "react";
 import messageController from "../WS/MessageController";
-import { Entry, User } from "../interface";
+import { WebsocketProps } from "../interface";
 import { wsURL } from "../GlobalURL";
 import logOut from "../WS/LogOut";
 import { Header, LoggedInContainer, Welcome } from "../main.styles";
 
-function Websocket(input: {
-  entries: Array<Entry>;
-  setEntries: Function;
-  setUsers: Function;
-  users: Array<User>;
-}) {
+function Websocket(input: WebsocketProps) {
   //check if the user is logged in
   const navigate = useNavigate();
   let username = sessionStorage.getItem("username");

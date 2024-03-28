@@ -2,7 +2,7 @@ import "../main.css";
 import useWebSocket from "react-use-websocket";
 import { wsURL } from "../GlobalURL";
 import { useNavigate } from "react-router-dom";
-import { Entry } from "../interface";
+import { Entry, ToDoListProps } from "../interface";
 import RenderEntries from "./RenderEntries";
 import NewEntry from "./NewEntry";
 import { getCookie } from "../CookieFunctions";
@@ -10,7 +10,7 @@ import deletePriorities from "../WS/deletePriorities";
 import { useEffect } from "react";
 import { Menu, Content } from "../main.styles";
 
-function ToDoList(input: { entries: Array<Entry>; setEntries: Function }) {
+function ToDoList(input: ToDoListProps) {
   const navigate = useNavigate();
   let username = sessionStorage.getItem("username");
   const entriesProgress: Array<Entry> = [];
