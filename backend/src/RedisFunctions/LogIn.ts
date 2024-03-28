@@ -16,32 +16,32 @@ async function logIn(req: Request, res: Response) {
     if (password !== result || !result) {
       res.status(401).json("Passwort oder Benutzername falsch");
     } else {
-      // if (connections.hasOwnProperty(username)) {
-      //   res.status(401).json("Benutzer bereits angemeldet");
-      // } else {
-      const TTL = await client.TTL(username);
-      const existToken = await client.EXISTS("token:" + username);
-      let token;
-      if (existToken) {
-        token = await client.get("token:" + username);
+      if (connections.hasOwnProperty(username)) {
+        res.status(401).json(`${username} ist bereits angemeldet `);
       } else {
-        token = generateToken();
-        await client.set("token:" + username, token, {
-          EX: 86400, //TTL 1 Tag
-          NX: true, //Eindeutiger Schlüssel
-        });
+        const TTL = await client.TTL(username);
+        const existToken = await client.EXISTS("token:" + username);
+        let token;
+        if (existToken) {
+          token = await client.get("token:" + username);
+        } else {
+          token = generateToken();
+          await client.set("token:" + username, token, {
+            EX: 86400, //TTL 1 Tag
+            NX: true, //Eindeutiger Schlüssel
+          });
+        }
+        const message = {
+          token: token,
+          status: "",
+        };
+        if (TTL >= 0) {
+          message.status = "Passwort ändern";
+        } else {
+          message.status = "Erfolgreich angemeldet";
+        }
+        res.status(200).json(message);
       }
-      const message = {
-        token: token,
-        status: "",
-      };
-      if (TTL >= 0) {
-        message.status = "Passwort ändern";
-      } else {
-        message.status = "Erfolgreich angemeldet";
-      }
-      res.status(200).json(message);
-      // }
     }
   } catch (error) {
     console.error("Error:", error);
