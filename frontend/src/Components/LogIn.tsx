@@ -67,6 +67,8 @@ function LogIn() {
       }
     }
     setIsLoading(false);
+    setUsername("");
+    setPassword("");
   }
 
   async function passwordChange() {
